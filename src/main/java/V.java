@@ -2,9 +2,13 @@ import java.util.Scanner;
 
 /**
  * V - A personal assistant with a theatrical flair, inspired by V for Vendetta.
- * This program greets the user, echoes their input, and bids them farewell.
+ * This program greets the user, manages tasks, and bids them farewell.
  */
 public class V {
+    private static final int MAX_TASKS = 100;
+    private static final String[] tasks = new String[MAX_TASKS];
+    private static int taskCount = 0;
+    private static final String DIVIDER = "    ____________________________________________________________\n";
     private static final String LOGO = 
             "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##*#%##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n"
             + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@%@@@@*%#%%@@%%%%%%%%%%%%%%%%%%%%%%%%\n"
@@ -96,8 +100,11 @@ public class V {
         do {
             System.out.print("> ");
             userInput = scanner.nextLine().trim();
-            if (!userInput.equalsIgnoreCase("bye")) {
-                echo(userInput);
+            
+            if (userInput.equalsIgnoreCase("list")) {
+                listTasks();
+            } else if (!userInput.equalsIgnoreCase("bye")) {
+                addTask(userInput);
             }
         } while (!userInput.equalsIgnoreCase("bye"));
         
@@ -123,18 +130,60 @@ public class V {
     }
     
     /**
-     * Displays V's theatrical echo of user input.
+     * Adds a new task to the task list with dramatic flair.
      * 
-     * @param input The user's input to be echoed back
+     * @param task The task to be added
      */
-    private static void echo(String input) {
-        System.out.println("    " + input);
+    private static void addTask(String task) {
+        if (taskCount >= MAX_TASKS) {
+            System.out.println(DIVIDER +
+                "    My apologies, but my memory is at capacity.\n" +
+                "    I can remember no more tasks. (Maximum " + MAX_TASKS + " tasks reached)\n" +
+                DIVIDER);
+            return;
+        }
+        
+        tasks[taskCount] = task;
+        taskCount++;
+        
+        System.out.println(DIVIDER +
+            "    'Tis done! This task I've committed to memory:\n" +
+            "      " + task + "\n" +
+            "    Now you have " + taskCount + " task" + (taskCount == 1 ? "" : "s") + " in the list.\n" +
+            DIVIDER);
+    }
+    
+    /**
+     * Displays all tasks with dramatic flair.
+     */
+    private static void listTasks() {
+        if (taskCount == 0) {
+            System.out.println(DIVIDER +
+                "    My apologies, but your list of tasks is as empty as a deserted stage.\n" +
+                "    Pray, give me something to remember!\n" +
+                DIVIDER);
+            return;
+        }
+        
+        StringBuilder sb = new StringBuilder(DIVIDER);
+        sb.append("    Behold! Your tasks, in all their glory:\n");
+        
+        for (int i = 0; i < taskCount; i++) {
+            sb.append("    " + (i + 1) + ". " + tasks[i] + "\n");
+        }
+        
+        sb.append(DIVIDER);
+        System.out.print(sb.toString());
     }
     
     /**
      * Displays V's theatrical farewell message.
      */
     private static void farewell() {
-        System.out.println("The curtain falls. Farewell, my friend.");
+        System.out.println("\n" + DIVIDER +
+            "    The curtain falls on our performance today.\n" +
+            "    Until we meet again, remember: ideas are bulletproof.\n" +
+            "    Farewell, my friend.\n" +
+            DIVIDER);
     }
 }

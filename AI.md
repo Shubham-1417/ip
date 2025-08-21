@@ -3,7 +3,7 @@
 Used ChatGPT to draft V-themed greeting/exit lines. Manually integrated and tested.
 Observation: Faster copy tweaks; kept logic simple to meet minimal spec.
 
-## Week 3 – Level‑1
+## Week 2 – Level‑1
 Enhanced V with echo functionality using clean code practices:
 - Refactored code into logical methods (showLogo, greet, echo, farewell)
 - Added Javadoc comments for all methods
@@ -11,4 +11,13 @@ Enhanced V with echo functionality using clean code practices:
 - Added proper error handling and resource management
 - Maintained V's theatrical personality in all output
 
-AI Usage: Used AI to help structure the code following clean code principles and Java best practices. Manually implemented all logic and verified behavior.
+## Week 2 – Level‑2
+Added task management with V's dramatic style:
+- Implemented String[] tasks array with MAX_TASKS limit (100)
+- Added task counter and management methods
+- Implemented 'list' command to show all tasks
+- Added dramatic responses for all operations
+- Included divider lines for better output formatting
+- Handled edge cases (empty list, max tasks reached)
+
+AI Usage: Used AI to help structure the task management system and generate V's dramatic responses. Manually implemented all logic and verified behavior.
