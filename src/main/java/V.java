@@ -6,7 +6,7 @@ import java.util.Scanner;
  */
 public class V {
     private static final int MAX_TASKS = 100;
-    private static final String[] tasks = new String[MAX_TASKS];
+    private static final Task[] tasks = new Task[MAX_TASKS];
     private static int taskCount = 0;
     private static final String DIVIDER = "    ____________________________________________________________\n";
     private static final String LOGO = 
@@ -103,6 +103,10 @@ public class V {
             
             if (userInput.equalsIgnoreCase("list")) {
                 listTasks();
+            } else if (userInput.toLowerCase().startsWith("mark ")) {
+                markTask(userInput);
+            } else if (userInput.toLowerCase().startsWith("unmark ")) {
+                unmarkTask(userInput);
             } else if (!userInput.equalsIgnoreCase("bye")) {
                 addTask(userInput);
             }
@@ -134,7 +138,12 @@ public class V {
      * 
      * @param task The task to be added
      */
-    private static void addTask(String task) {
+    /**
+     * Adds a new task to the task list with dramatic flair.
+     * 
+     * @param description The task description to be added
+     */
+    private static void addTask(String description) {
         if (taskCount >= MAX_TASKS) {
             System.out.println(DIVIDER +
                 "    My apologies, but my memory is at capacity.\n" +
@@ -143,12 +152,13 @@ public class V {
             return;
         }
         
-        tasks[taskCount] = task;
+        Task newTask = new Task(description);
+        tasks[taskCount] = newTask;
         taskCount++;
         
         System.out.println(DIVIDER +
             "    'Tis done! This task I've committed to memory:\n" +
-            "      " + task + "\n" +
+            "      " + newTask + "\n" +
             "    Now you have " + taskCount + " task" + (taskCount == 1 ? "" : "s") + " in the list.\n" +
             DIVIDER);
     }
@@ -169,11 +179,79 @@ public class V {
         sb.append("    Behold! Your tasks, in all their glory:\n");
         
         for (int i = 0; i < taskCount; i++) {
-            sb.append("    " + (i + 1) + ". " + tasks[i] + "\n");
+            sb.append("    " + (i + 1) + ". " + tasks[i].toString() + "\n");
         }
         
         sb.append(DIVIDER);
         System.out.print(sb.toString());
+    }
+    
+    /**
+     * Displays V's theatrical farewell message.
+     */
+    /**
+     * Marks a task as done based on the user's command.
+     * 
+     * @param command The user's mark command (e.g., "mark 1")
+     */
+    private static void markTask(String command) {
+        try {
+            int taskNum = Integer.parseInt(command.substring(5).trim());
+            if (taskNum < 1 || taskNum > taskCount) {
+                System.out.println(DIVIDER +
+                    "    My apologies, but I cannot mark what does not exist.\n" +
+                    "    Task " + taskNum + " is beyond the veil of my memory.\n" +
+                    DIVIDER);
+                return;
+            }
+            
+            Task task = tasks[taskNum - 1];
+            task.mark();
+            
+            System.out.println(DIVIDER +
+                "    A deed well done! I've marked this task as complete:\n" +
+                "      " + task + "\n" +
+                DIVIDER);
+                
+        } catch (NumberFormatException e) {
+            System.out.println(DIVIDER +
+                "    Pray, speak clearly! The task number must be a number.\n" +
+                "    (e.g., 'mark 2' to mark task 2 as done)\n" +
+                DIVIDER);
+        }
+    }
+    
+    /**
+     * Marks a task as not done based on the user's command.
+     * 
+     * @param command The user's unmark command (e.g., "unmark 1")
+     */
+    private static void unmarkTask(String command) {
+        try {
+            int taskNum = Integer.parseInt(command.substring(7).trim());
+            if (taskNum < 1 || taskNum > taskCount) {
+                System.out.println(DIVIDER +
+                    "    My apologies, but I cannot unmark what does not exist.\n" +
+                    "    Task " + taskNum + " remains beyond my reach.\n" +
+                    DIVIDER);
+                return;
+            }
+            
+            Task task = tasks[taskNum - 1];
+            task.unmark();
+            
+            System.out.println(DIVIDER +
+                "    Very well, I've marked this task as not done.\n" +
+                "    The wheel turns, and we begin again.\n" +
+                "      " + task + "\n" +
+                DIVIDER);
+                
+        } catch (NumberFormatException e) {
+            System.out.println(DIVIDER +
+                "    Pray, speak clearly! The task number must be a number.\n" +
+                "    (e.g., 'unmark 2' to mark task 2 as not done)\n" +
+                DIVIDER);
+        }
     }
     
     /**

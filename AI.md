@@ -21,3 +21,14 @@ Added task management with V's dramatic style:
 - Handled edge cases (empty list, max tasks reached)
 
 AI Usage: Used AI to help structure the task management system and generate V's dramatic responses. Manually implemented all logic and verified behavior.
+
+## Week 3 – Level‑3
+Refactored to use Task class and added mark/unmark functionality:
+- Created Task class with description and isDone state
+- Implemented mark() and unmark() methods with V's dramatic flair
+- Added input validation for task numbers
+- Updated list display to show task status ([X] or [ ])
+- Maintained V's theatrical voice in all responses
+- Improved error handling for invalid inputs
+
+AI Usage: Used AI to help design the Task class and generate V's dramatic responses for the mark/unmark functionality. Manually implemented the core logic and verified behavior.
