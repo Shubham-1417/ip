@@ -1,0 +1,38 @@
+/**
+ * A task that needs to be done before a specific date/time.
+ * A promise with a deadline, a race against time itself.
+ */
+public class Deadline extends Task {
+    protected final String by;
+
+    /**
+     * Creates a new Deadline task with description and due date/time.
+     * 
+     * @param description The purpose of this task
+     * @param by When this task must be completed by
+     */
+    public Deadline(String description, String by) {
+        super(description);
+        this.by = by;
+    }
+
+    /**
+     * Returns the type tag for this task, 'D' for Deadline.
+     * 
+     * @return "D" representing a Deadline task
+     */
+    @Override
+    public String getTypeTag() { 
+        return "D"; 
+    }
+
+    /**
+     * Returns a string representation of this deadline task.
+     * 
+     * @return Formatted string with deadline details
+     */
+    @Override
+    public String toString() {
+        return super.toString() + " (by: " + by + ")";
+    }
+}

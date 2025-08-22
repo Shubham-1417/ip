@@ -8,6 +8,20 @@ public class V {
     private static final int MAX_TASKS = 100;
     private static final Task[] tasks = new Task[MAX_TASKS];
     private static int taskCount = 0;
+    
+    // Command constants
+    private static final String CMD_LIST = "list";
+    private static final String CMD_MARK = "mark";
+    private static final String CMD_UNMARK = "unmark";
+    private static final String CMD_TODO = "todo";
+    private static final String CMD_DEADLINE = "deadline";
+    private static final String CMD_EVENT = "event";
+    private static final String CMD_BYE = "bye";
+    
+    // Delimiters
+    private static final String DELIMITER_BY = "/by";
+    private static final String DELIMITER_FROM = "/from";
+    private static final String DELIMITER_TO = "/to";
     private static final String DIVIDER = "    ____________________________________________________________\n";
     private static final String LOGO = 
             "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##*#%##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n"
@@ -101,16 +115,37 @@ public class V {
             System.out.print("> ");
             userInput = scanner.nextLine().trim();
             
-            if (userInput.equalsIgnoreCase("list")) {
+            String[] parts = userInput.split("\\s+", 2);
+            String command = parts[0].toLowerCase();
+            String arguments = parts.length > 1 ? parts[1] : "";
+            
+            switch (command) {
+            case CMD_LIST:
                 listTasks();
-            } else if (userInput.toLowerCase().startsWith("mark ")) {
-                markTask(userInput);
-            } else if (userInput.toLowerCase().startsWith("unmark ")) {
-                unmarkTask(userInput);
-            } else if (!userInput.equalsIgnoreCase("bye")) {
-                addTask(userInput);
+                break;
+            case CMD_MARK:
+                markTask(arguments);
+                break;
+            case CMD_UNMARK:
+                unmarkTask(arguments);
+                break;
+            case CMD_TODO:
+                addTodo(arguments);
+                break;
+            case CMD_DEADLINE:
+                addDeadline(arguments);
+                break;
+            case CMD_EVENT:
+                addEvent(arguments);
+                break;
+            case CMD_BYE:
+                // Will exit the loop
+                break;
+            default:
+                System.out.println("My dear friend, I'm afraid I don't understand that command.");
+                System.out.println("Try 'todo', 'deadline', 'event', 'list', 'mark', 'unmark', or 'bye'.");
             }
-        } while (!userInput.equalsIgnoreCase("bye"));
+        } while (!userInput.equalsIgnoreCase(CMD_BYE));
         
         farewell();
         scanner.close();
@@ -134,90 +169,126 @@ public class V {
     }
     
     /**
-     * Adds a new task to the task list with dramatic flair.
-     * 
-     * @param task The task to be added
+     * Displays all tasks with dramatic flair.
      */
+    private static void listTasks() {
+        System.out.println(DIVIDER + "     Behold, your list of tasks:");
+        if (taskCount == 0) {
+            System.out.println("     You have no tasks, my friend. How... peaceful.\n" + DIVIDER);
+        } else {
+            for (int i = 0; i < taskCount; i++) {
+                System.out.printf("     %d.%s\n", i + 1, tasks[i]);
+            }
+            System.out.print(DIVIDER);
+        }
+    }
+    
     /**
      * Adds a new task to the task list with dramatic flair.
      * 
      * @param description The task description to be added
      */
-    private static void addTask(String description) {
-        if (taskCount >= MAX_TASKS) {
-            System.out.println(DIVIDER +
-                "    My apologies, but my memory is at capacity.\n" +
-                "    I can remember no more tasks. (Maximum " + MAX_TASKS + " tasks reached)\n" +
-                DIVIDER);
+    private static void addTodo(String description) {
+        if (description.trim().isEmpty()) {
+            System.out.println(DIVIDER + "     My dear friend, even a simple 'todo' requires a description.\n" + DIVIDER);
             return;
         }
         
-        Task newTask = new Task(description);
-        tasks[taskCount] = newTask;
+        if (taskCount >= MAX_TASKS) {
+            System.out.println(DIVIDER + "     My apologies, but your list of tasks has reached its limit.\n" + DIVIDER);
+            return;
+        }
+        
+        tasks[taskCount] = new Todo(description);
         taskCount++;
         
-        System.out.println(DIVIDER +
-            "    'Tis done! This task I've committed to memory:\n" +
-            "      " + newTask + "\n" +
-            "    Now you have " + taskCount + " task" + (taskCount == 1 ? "" : "s") + " in the list.\n" +
-            DIVIDER);
+        printTaskAdded(tasks[taskCount-1]);
     }
     
-    /**
-     * Displays all tasks with dramatic flair.
-     */
-    private static void listTasks() {
-        if (taskCount == 0) {
-            System.out.println(DIVIDER +
-                "    My apologies, but your list of tasks is as empty as a deserted stage.\n" +
-                "    Pray, give me something to remember!\n" +
-                DIVIDER);
+    private static void addDeadline(String arguments) {
+        if (!arguments.contains(DELIMITER_BY)) {
+            System.out.println(DIVIDER + "     A deadline requires both a description and a '/by' time.\n" + DIVIDER);
             return;
         }
         
-        StringBuilder sb = new StringBuilder(DIVIDER);
-        sb.append("    Behold! Your tasks, in all their glory:\n");
+        String[] parts = arguments.split("\\s" + DELIMITER_BY + "\\s*", 2);
+        String description = parts[0].trim();
+        String by = parts.length > 1 ? parts[1].trim() : "";
         
-        for (int i = 0; i < taskCount; i++) {
-            sb.append("    " + (i + 1) + ". " + tasks[i].toString() + "\n");
+        if (description.isEmpty() || by.isEmpty()) {
+            System.out.println(DIVIDER + "     Both description and deadline time are required.\n" + DIVIDER);
+            return;
         }
         
-        sb.append(DIVIDER);
-        System.out.print(sb.toString());
+        if (taskCount >= MAX_TASKS) {
+            System.out.println(DIVIDER + "     My apologies, but your list of tasks has reached its limit.\n" + DIVIDER);
+            return;
+        }
+        
+        tasks[taskCount] = new Deadline(description, by);
+        taskCount++;
+        
+        printTaskAdded(tasks[taskCount-1]);
     }
     
-    /**
-     * Displays V's theatrical farewell message.
-     */
+    private static void addEvent(String arguments) {
+        if (!arguments.contains(DELIMITER_FROM) || !arguments.contains(DELIMITER_TO)) {
+            System.out.println(DIVIDER + "     An event requires '/from' and '/to' times.\n" + DIVIDER);
+            return;
+        }
+        
+        String[] parts = arguments.split("\\s" + DELIMITER_FROM + "\\s*", 2);
+        String description = parts[0].trim();
+        
+        if (parts.length < 2) {
+            System.out.println(DIVIDER + "     Please specify both start and end times.\n" + DIVIDER);
+            return;
+        }
+        
+        String[] timeParts = parts[1].split("\\s" + DELIMITER_TO + "\\s*", 2);
+        String from = timeParts[0].trim();
+        String to = timeParts.length > 1 ? timeParts[1].trim() : "";
+        
+        if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
+            System.out.println(DIVIDER + "     Description, start time, and end time are all required.\n" + DIVIDER);
+            return;
+        }
+        
+        if (taskCount >= MAX_TASKS) {
+            System.out.println(DIVIDER + "     My apologies, but your list of tasks has reached its limit.\n" + DIVIDER);
+            return;
+        }
+        
+        tasks[taskCount] = new Event(description, from, to);
+        taskCount++;
+        
+        printTaskAdded(tasks[taskCount-1]);
+    }
+    
+    private static void printTaskAdded(Task task) {
+        System.out.println(DIVIDER + "     Got it. I've added this task:");
+        System.out.println("       " + task);
+        System.out.printf("     Now you have %d task%s in the list.\n" + DIVIDER, 
+                taskCount, taskCount == 1 ? "" : "s");
+    }
+    
     /**
      * Marks a task as done based on the user's command.
      * 
      * @param command The user's mark command (e.g., "mark 1")
      */
-    private static void markTask(String command) {
+    private static void markTask(String argument) {
         try {
-            int taskNum = Integer.parseInt(command.substring(5).trim());
-            if (taskNum < 1 || taskNum > taskCount) {
-                System.out.println(DIVIDER +
-                    "    My apologies, but I cannot mark what does not exist.\n" +
-                    "    Task " + taskNum + " is beyond the veil of my memory.\n" +
-                    DIVIDER);
-                return;
+            int taskNum = Integer.parseInt(argument.trim()) - 1;
+            if (taskNum >= 0 && taskNum < taskCount) {
+                tasks[taskNum].mark();
+                System.out.println(DIVIDER + "     A task fulfilled! Marked as done:");
+                System.out.println("       " + tasks[taskNum] + "\n" + DIVIDER);
+            } else {
+                System.out.println(DIVIDER + "     My dear friend, that task number is but an illusion.\n" + DIVIDER);
             }
-            
-            Task task = tasks[taskNum - 1];
-            task.mark();
-            
-            System.out.println(DIVIDER +
-                "    A deed well done! I've marked this task as complete:\n" +
-                "      " + task + "\n" +
-                DIVIDER);
-                
         } catch (NumberFormatException e) {
-            System.out.println(DIVIDER +
-                "    Pray, speak clearly! The task number must be a number.\n" +
-                "    (e.g., 'mark 2' to mark task 2 as done)\n" +
-                DIVIDER);
+            System.out.println(DIVIDER + "     Pray, tell me the number of the task you wish to mark.\n" + DIVIDER);
         }
     }
     
@@ -226,31 +297,19 @@ public class V {
      * 
      * @param command The user's unmark command (e.g., "unmark 1")
      */
-    private static void unmarkTask(String command) {
+    private static void unmarkTask(String argument) {
         try {
-            int taskNum = Integer.parseInt(command.substring(7).trim());
-            if (taskNum < 1 || taskNum > taskCount) {
-                System.out.println(DIVIDER +
-                    "    My apologies, but I cannot unmark what does not exist.\n" +
-                    "    Task " + taskNum + " remains beyond my reach.\n" +
-                    DIVIDER);
-                return;
+            int taskNum = Integer.parseInt(argument.trim()) - 1;
+            if (taskNum >= 0 && taskNum < taskCount) {
+                tasks[taskNum].unmark();
+                System.out.println(DIVIDER + "     Very well, I've marked this task as not done:");
+                System.out.println("       " + tasks[taskNum] + "\n" + DIVIDER);
+            } else {
+                System.out.println(DIVIDER + "     My dear friend, that task number is but an illusion.\n" + DIVIDER);
             }
-            
-            Task task = tasks[taskNum - 1];
-            task.unmark();
-            
-            System.out.println(DIVIDER +
-                "    Very well, I've marked this task as not done.\n" +
-                "    The wheel turns, and we begin again.\n" +
-                "      " + task + "\n" +
-                DIVIDER);
-                
         } catch (NumberFormatException e) {
-            System.out.println(DIVIDER +
-                "    Pray, speak clearly! The task number must be a number.\n" +
-                "    (e.g., 'unmark 2' to mark task 2 as not done)\n" +
-                DIVIDER);
+            System.out.println(DIVIDER + "     Pray, tell me the number of the task you wish to unmark.");
+            System.out.println("     (e.g., 'unmark 2' to mark task 2 as not done)\n" + DIVIDER);
         }
     }
     

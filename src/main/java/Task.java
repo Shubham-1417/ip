@@ -2,7 +2,7 @@
  * A simple task with a description and a done/not-done status.
  * Each task is a solemn vow, a promise to be fulfilled or broken.
  */
-public class Task {
+public abstract class Task {
     private final String description;
     private boolean isDone;
 
@@ -42,13 +42,20 @@ public class Task {
         return isDone ? "X" : " ";
     }
 
+    /**
+     * Returns the type tag for this task (T for Todo, D for Deadline, E for Event).
+     * 
+     * @return A single character string representing the task type
+     */
+    public abstract String getTypeTag();
+    
     /** 
      * Presents this task as a dramatic proclamation.
      * 
-     * @return A string in the form of [X] task description
+     * @return A string in the form of [T][X] task description
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        return "[" + getTypeTag() + "][" + getStatusIcon() + "] " + description;
     }
 }

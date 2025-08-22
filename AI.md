@@ -32,3 +32,15 @@ Refactored to use Task class and added mark/unmark functionality:
 - Improved error handling for invalid inputs
 
 AI Usage: Used AI to help design the Task class and generate V's dramatic responses for the mark/unmark functionality. Manually implemented the core logic and verified behavior.
+
+## Week 3 – Level‑4
+Implemented task types (Todo, Deadline, Event) with inheritance:
+- Created abstract Task class with common functionality
+- Extended Task with Todo, Deadline, and Event subclasses
+- Added support for new commands: todo, deadline, event
+- Implemented proper parsing for task descriptions and dates/times
+- Enhanced list display to show task types and additional details
+- Maintained V's theatrical style in all responses
+- Added input validation and error handling for all commands
+
+AI Usage: Used AI to help design the class hierarchy and generate V's dramatic responses. Manually implemented the command parsing and task management logic.
