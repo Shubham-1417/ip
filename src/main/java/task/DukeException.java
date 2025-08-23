@@ -1,4 +1,6 @@
 
+package task;
+
 /**
  * Represents user-facing errors in the chatbot (input/command issues).
  */

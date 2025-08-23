@@ -3,6 +3,13 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import enums.CommandType;
+import task.Task;
+import task.Todo;
+import task.Deadline;
+import task.Event;
+import task.DukeException;
+
 /**
  * V - A personal assistant with a theatrical flair, inspired by V for Vendetta.
  * This program greets the user, manages tasks, and bids them farewell.
@@ -10,17 +17,7 @@ import java.util.ArrayList;
 public class V {
     private static final ArrayList<Task> tasks = new ArrayList<>();
     
-    // Command constants
-    private static final String CMD_LIST = "list";
-    private static final String CMD_MARK = "mark";
-    private static final String CMD_UNMARK = "unmark";
-    private static final String CMD_TODO = "todo";
-    private static final String CMD_DEADLINE = "deadline";
-    private static final String CMD_EVENT = "event";
-    private static final String CMD_DELETE = "delete";
-    private static final String CMD_BYE = "bye";
-    
-    // Delimiters
+    // Delimiters used in string parsing
     private static final String DELIMITER_BY = "/by";
     private static final String DELIMITER_FROM = "/from";
     private static final String DELIMITER_TO = "/to";
@@ -165,43 +162,48 @@ public class V {
                 }
                 
                 String[] parts = userInput.split("\\s+", 2);
-                String command = parts[0].toLowerCase();
+                String commandStr = parts[0].toLowerCase();
                 String arguments = parts.length > 1 ? parts[1] : "";
                 
+                CommandType command = CommandType.fromString(commandStr);
+                if (command == null) {
+                    throw new DukeException(UNKNOWN_COMMAND);
+                }
+                
                 switch (command) {
-                case CMD_LIST:
+                case LIST:
                     listTasks();
                     break;
-                case CMD_MARK:
+                case MARK:
                     markTask(arguments, true);
                     break;
-                case CMD_UNMARK:
+                case UNMARK:
                     markTask(arguments, false);
                     break;
-                case CMD_TODO:
+                case TODO:
                     addTodo(arguments);
                     break;
-                case CMD_DEADLINE:
+                case DEADLINE:
                     addDeadline(arguments);
                     break;
-                case CMD_EVENT:
+                case EVENT:
                     addEvent(arguments);
                     break;
-                case CMD_DELETE:
+                case DELETE:
                     deleteTask(arguments);
                     break;
-                case CMD_BYE:
+                case BYE:
                     // Will exit the loop
                     break;
                 default:
-                    throw new DukeException(UNKNOWN_COMMAND);
+                    throw new task.DukeException(UNKNOWN_COMMAND);
                 }
-            } catch (DukeException e) {
+            } catch (task.DukeException e) {
                 showError(e.getMessage());
             } catch (Exception e) {
                 showError("An unexpected error occurred: " + e.getMessage());
             }
-        } while (!userInput.equalsIgnoreCase(CMD_BYE));
+        } while (!userInput.equalsIgnoreCase("bye"));
         
         farewell();
         scanner.close();

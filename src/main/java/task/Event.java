@@ -1,3 +1,7 @@
+package task;
+
+import enums.TaskType;
+
 /**
  * A task that starts at a specific time and ends at a specific time.
  * A performance in the grand play of your schedule.
@@ -20,13 +24,13 @@ public class Event extends Task {
     }
 
     /**
-     * Returns the type tag for this task, 'E' for Event.
+     * Returns the type of this task.
      * 
-     * @return "E" representing an Event task
+     * @return The TaskType.EVENT enum value
      */
     @Override
-    public String getTypeTag() { 
-        return "E"; 
+    public TaskType getTaskType() {
+        return TaskType.EVENT;
     }
 
     /**

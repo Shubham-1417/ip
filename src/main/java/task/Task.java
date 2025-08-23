@@ -1,10 +1,15 @@
+package task;
+
+import enums.TaskStatus;
+import enums.TaskType;
+
 /**
  * A simple task with a description and a done/not-done status.
  * Each task is a solemn vow, a promise to be fulfilled or broken.
  */
 public abstract class Task {
     private final String description;
-    private boolean isDone;
+    private TaskStatus status;
 
     /**
      * Creates a new task, unfulfilled, waiting in the wings.
@@ -13,7 +18,7 @@ public abstract class Task {
      */
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
+        this.status = TaskStatus.NOT_DONE;
     }
 
     /** 
@@ -21,7 +26,7 @@ public abstract class Task {
      * The deed is done, the vow upheld.
      */
     public void mark() {
-        this.isDone = true;
+        this.status = TaskStatus.DONE;
     }
 
     /** 
@@ -29,7 +34,23 @@ public abstract class Task {
      * The wheel turns back, the promise yet to be kept.
      */
     public void unmark() {
-        this.isDone = false;
+        this.status = TaskStatus.NOT_DONE;
+    }
+
+    /** 
+     * Toggles the status of this task between done and not done.
+     */
+    public void toggleStatus() {
+        this.status = status.toggle();
+    }
+
+    /**
+     * Checks if this task is marked as done.
+     * 
+     * @return true if the task is done, false otherwise
+     */
+    public boolean isDone() {
+        return status == TaskStatus.DONE;
     }
 
     /** 
@@ -39,15 +60,24 @@ public abstract class Task {
      * @return "X" if done, " " if not
      */
     public String getStatusIcon() {
-        return isDone ? "X" : " ";
+        return status.getIcon();
     }
 
+    /**
+     * Returns the type of this task.
+     * 
+     * @return The TaskType of this task
+     */
+    public abstract TaskType getTaskType();
+    
     /**
      * Returns the type tag for this task (T for Todo, D for Deadline, E for Event).
      * 
      * @return A single character string representing the task type
      */
-    public abstract String getTypeTag();
+    public String getTypeTag() {
+        return getTaskType().getTag();
+    }
     
     /** 
      * Presents this task as a dramatic proclamation.
@@ -56,6 +86,6 @@ public abstract class Task {
      */
     @Override
     public String toString() {
-        return "[" + getTypeTag() + "][" + getStatusIcon() + "] " + description;
+        return String.format("[%s][%s] %s", getTypeTag(), getStatusIcon(), description);
     }
 }

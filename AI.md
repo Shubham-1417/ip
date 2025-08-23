@@ -48,16 +48,25 @@ AI Usage: Used AI to help design the class hierarchy and generate V's dramatic r
 ## Week 2 – Level‑5
 Refactored to use ArrayList for dynamic task management:
 - Replaced fixed-size array with `ArrayList<Task>`
+- Added input validation and error handling for all commands
+- Maintained V's theatrical style in all responses
+
+## Week 2 – Level‑6
+Implemented enums for better code organization and type safety:
+- Created `CommandType` enum for command parsing
+- Added `TaskType` enum for task categorization
+- Implemented `TaskStatus` enum for task state management
+- Refactored command parsing to use enums
+- Improved code maintainability and type safety
+- Added comprehensive error handling for invalid commands
+- Maintained V's theatrical personality in all responses
 - Removed MAX_TASKS limitation
 - Updated all task operations to use ArrayList methods
 - Added proper error handling for empty lists
-- Maintained V's theatrical responses throughout
 - Improved task counting with proper pluralization
 - Added more descriptive error messages
 
-AI Usage: Used AI to help refactor the code from array to ArrayList. Manually implemented all logic and verified behavior.
-
-## Week 2 – Level‑6
+AI Usage: Used AI to help design the enum structure and generate V's dramatic responses. Manually implemented the enum logic and integrated it with the existing codebase.
 Added delete functionality and improved user experience:
 - Implemented 'delete' command to remove tasks
 - Added proper task renumbering after deletion

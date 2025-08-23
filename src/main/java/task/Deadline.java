@@ -1,3 +1,7 @@
+package task;
+
+import enums.TaskType;
+
 /**
  * A task that needs to be done before a specific date/time.
  * A promise with a deadline, a race against time itself.
@@ -17,13 +21,13 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the type tag for this task, 'D' for Deadline.
+     * Returns the type of this task.
      * 
-     * @return "D" representing a Deadline task
+     * @return The TaskType.DEADLINE enum value
      */
     @Override
-    public String getTypeTag() { 
-        return "D"; 
+    public TaskType getTaskType() {
+        return TaskType.DEADLINE;
     }
 
     /**
