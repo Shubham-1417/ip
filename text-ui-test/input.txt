@@ -1,3 +1,20 @@
+invalid command
+help
+todo
+deadline
+deadline return book
+deadline /by Sunday
+event
+event project meeting
+event project meeting /from
+event project meeting /from Mon 2pm
+event project meeting /to 4pm
+mark
+mark abc
+mark 999
+unmark
+unmark xyz
+unmark 999
 todo borrow book
 deadline return book /by Sunday
 event project meeting /from Mon 2pm /to 4pm
@@ -5,4 +22,7 @@ list
 mark 1
 unmark 1
 list
+todo task1
+todo task2
+todo task3
 bye

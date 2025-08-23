@@ -1,37 +1,38 @@
 @ECHO OFF
 chcp 65001 > nul
 
-REM Set script directory
-SET SCRIPT_DIR=%~dp0
+REM Set script directory to the project root
+cd /d "%~dp0.."
 
 REM Set project paths
-SET BIN_DIR=%SCRIPT_DIR%..\bin
-SET SRC_DIR=%SCRIPT_DIR%..\src\main\java
+SET BIN_DIR=bin
+SET SRC_DIR=src\main\java
 
 REM Create bin directory if it doesn't exist
 if not exist "%BIN_DIR%" mkdir "%BIN_DIR%"
 
 REM Delete previous ACTUAL.TXT if it exists
-if exist "%SCRIPT_DIR%ACTUAL.TXT" del "%SCRIPT_DIR%ACTUAL.TXT"
+if exist "text-ui-test\ACTUAL.TXT" del "text-ui-test\ACTUAL.TXT"
 
 echo Compiling...
-javac -Xlint:none -d "%BIN_DIR%" "%SRC_DIR%\V.java" "%SRC_DIR%\Task.java" "%SRC_DIR%\Todo.java" "%SRC_DIR%\Deadline.java" "%SRC_DIR%\Event.java"
+cd /d "%SRC_DIR%"
+javac -Xlint:none -d "..\..\..\bin" *.java
 if errorlevel 1 (
     echo ********** BUILD FAILURE **********
     exit /b 1
 )
 
 echo Running tests...
-java -classpath "%BIN_DIR%" V < "%SCRIPT_DIR%input.txt" > "%SCRIPT_DIR%ACTUAL.TXT" 2> "%SCRIPT_DIR%error.log"
+cd /d "%~dp0.."
+java -classpath "%BIN_DIR%" V < "text-ui-test\input.txt" > "text-ui-test\ACTUAL.TXT" 2> "text-ui-test\error.log"
 echo Test run finished.
 
 echo Comparing with expected output...
-FC /N "%SCRIPT_DIR%ACTUAL.TXT" "%SCRIPT_DIR%EXPECTED.TXT"
-
-if errorlevel 1 (
-    echo ********** TEST FAILED **********
-    exit /b 1
-) else (
-    echo ********** TEST PASSED **********
+fc /A /L "text-ui-test\ACTUAL.TXT" "text-ui-test\EXPECTED.TXT"
+if %ERRORLEVEL% EQU 0 (
+    echo Test result: PASSED
     exit /b 0
+) else (
+    echo Test result: FAILED
+    exit /b 1
 )

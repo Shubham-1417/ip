@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 /**
  * V - A personal assistant with a theatrical flair, inspired by V for Vendetta.
@@ -24,78 +26,89 @@ public class V {
     private static final String DELIMITER_TO = "/to";
     private static final String DIVIDER = "    ____________________________________________________________\n";
     private static final String LOGO = 
-            "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##*#%##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@%@@@@*%#%%@@%%%%%%%%%%%%%%%%%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@+*+:=+%@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%@@@@@@@@@%@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%@%@@@@@@%@@@@@@@@@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%@%@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@#*+:....::+*++=--:-----===+#%@@@@@@@@@@@@@@@@@%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%%@@@@@@:....:::.....:.::::::::::::::-==+**#@@@@@@@@@@@@@@%%%\n"
-            + "%%%%%%%%%%%%%%%%%%%%@%@%%=...:::::::..:::::::::::::.:-+*****####*#@@@@@@@@@@@@%%\n"
-            + "%%%%%%%%%%%%%%%%%@@%%%@#:.:.*%@+%@@@*+::::::::::..:=+*%@@@@@@@@@@%#%@@@@@@@@@@%%\n"
-            + "%%%%%%%%%%%%%%%%@@%%%%@#:-=-::=+*+@%%@@@@::::::::::@@@@@%%%%**+***%%@@@@@@@@@@@%\n"
-            + "%%%%%%%%%%%%%%%%%%%%@@%%:.......:::-++#@@@%::::::.@@@%%%#*===++++++#@@@@@@@@@@@%\n"
-            + "%%%%%%%%%%%%%%%%%@%%%@%%........::::---++*-::::--+*%%%#*+===+++*+**%@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%%%%%@%@@%:::::--***##+====-:...:=*#%%#**%%%@@@@%###%@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%@@%%%@@@%-:-+#@@@@@@@@@@%+:....:+*###@@@@@@@@@@%@@@@@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%@@%@%%@%@-.....:---=+=:::......:+**##%#++-=+**++++*%@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%@@@@%%@%%......................:+***##+--:::---==+*#%%%%@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%@@@%@@@@%......................:+++*##*=-----===++*#%@%@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%@@@%%%@@@%:.....................:+******++==-==++**##%@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%@@@@%@@@@@=:..:::::::...........:=*+*#**#**+++++**##%@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%@@@@%@@%@%-:::::-----=:........:=+******##%######%%@@@%@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%%@@%%%@@@@+::-+**#=:.....=##:==+***%%#*****##%@@@@@@@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%%@@%@%%@@@@-:-+-##-........:+=%@@@@%#******##@@@@@@@@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%#@%%@@%%@@@@@@-:==.#@%+.....+%*#@%*@@@@@***#%@@@@@@@@@@@%@@@@@@@@@@\n"
-            + "%%%%%#%%%#%%%%%%@%%%%%@@@@@%-:-=.:%@@@@@%%%%%-:::%@@@@@@@@@@%@@@@@@@@@@@@@@@@@@@\n"
-            + "%%%%%%%%#%%%%#%@%@%%@@@@@@@%#-.:=:....::+%%%@@@@@@@@%%%%%%#%%@@@@@@@@@@@@@@@@@@@\n"
-            + "%%%#%#%#%%%%#%%%%%%%%@@@@@@@%*-.:--::.......::----=+++*###%%@@@@@@@@@@@@@@@@@@@@\n"
-            + "%%#%%%%#%%%%%%%%@@%%%%@@@@@@@%*-...-....::--==+**########%%@@@@@@@@@%%@@@@@@@@@@\n"
-            + "%%%%%%%#%#%%#%@%@@%%%%@@@@@@@@%+-...::.......-@@@#*+**###%@@@@@@@@@@%@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%@@@@%@%@@@@@@@@@@+::..........=@%@#*++*##%%%@@@@@@@@@%@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%%@%%%@%@%@@@@@@@@@%-:.........+%@@@#*+*#%%%@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%%%@@%@@@@@@@@@@@@@@@@-:.......#%@@@##**##%@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%%%%%%@@%@@@@@@@@@@@@@@@@+:.....+%@@@#**##%@@@@@@@%@@@@@@@@@@@@@@@@\n"
-            + "%%%%%%%%%%%%%%@%@@@%@@@@@@@@@@@@@@@@@@@@%=::.-%@@*#*##@@@@@@@@@%@@@%@@@@@@@@@@@@\n"
-            + "%%%%#%%%%%@%%@%%%@%@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@%@@@@@@@@@@@@@@@@@%@@@@@@@@@@@@\n"
-            + "%#%%#%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@@@@@\n"
-            + "#%%#%%%%@%@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "%##%%%%%%@@@%@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@@@@@@@@@@@\n"
-            + "#%%%%@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "#%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "###%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@#@@%@@@%%%@@%%@@%@@@@@@@@@@@@@@@@@@@@\n"
-            + "%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@%%%@@%%@@@@%@@@@@@%%@@@@@@@@@@@@@@@@@@@\n"
-            + "%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%#%@@@%%%%%%%@@@@@@@@@@@%@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%#%@@%#######%@@@@@@@%%@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@##%%%#%%%%%@@@@@@@@%%%@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@%%%%%@@@@@@%%%@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%#%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%##%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+--+%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*+=%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@%#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@%@@@@@@@@@@@@@@@@@@@@%%%%%@@@@@@@@@@@@@%#%@@@@@@@@@@%%%%%%%%@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@%%@@@@@@@@@@%#%@@@@@@@@%%%######%%@@@@@@@@@@\n"
-            + "@@@@@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@%@%%@@@@@@@@##@@@@@@@%%%######%@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%@@%@@@@@*#@@@@%#%%#%#####@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@%%%%%%%%@@@@@@@@@@@@%%%%@@@@@@@+%@@@%%%%%######@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@##%%%%%%%@@%%%%@@@@@@@%@@@@@@+@@@%%%%%######@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@%%##*####%%%%%%%%%%@@@@%@@@@@@+@@@@%%######%@@@@@@@@@@@@@@@@@@\n"
-            + "@@@@@@@@@@@@@@@@@@@@#########%%%%%@@@@@@@@@@%%@@*@@@%######@@@@@@@@@@@@@@@@@@@@@\n";
-
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##*#%##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@%@@@@*%#%%@@%%%%%%%%%%%%%%%%%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@+*+:=+%@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%@@@@@@@@@%@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%@%@@@@@@%@@@@@@@@@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%@%@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@#*+:....::+*++=--:-----===+#%@@@@@@@@@@@@@@@@@%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%%@@@@@@:....:::.....:.::::::::::::::-==+**#@@@@@@@@@@@@@@%%%\n"
+    + "%%%%%%%%%%%%%%%%%%%%@%@%%=...:::::::..:::::::::::::.:-+*****####*#@@@@@@@@@@@@%%\n"
+    + "%%%%%%%%%%%%%%%%%@@%%%@#:.:.*%@+%@@@*+::::::::::..:=+*%@@@@@@@@@@%#%@@@@@@@@@@%%\n"
+    + "%%%%%%%%%%%%%%%%@@%%%%@#:-=-::=+*+@%%@@@@::::::::::@@@@@%%%%**+***%%@@@@@@@@@@@%\n"
+    + "%%%%%%%%%%%%%%%%%%%%@@%%:.......:::-++#@@@%::::::.@@@%%%#*===++++++#@@@@@@@@@@@%\n"
+    + "%%%%%%%%%%%%%%%%%@%%%@%%........::::---++*-::::--+*%%%#*+===+++*+**%@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%%%%%@%@@%:::::--***##+====-:...:=*#%%#**%%%@@@@%###%@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%@@%%%@@@%-:-+#@@@@@@@@@@%+:....:+*###@@@@@@@@@@%@@@@@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%@@%@%%@%@-.....:---=+=:::......:+**##%#++-=+**++++*%@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%@@@@%%@%%......................:+***##+--:::---==+*#%%%%@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%@@@%@@@@%......................:+++*##*=-----===++*#%@%@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%@@@%%%@@@%:.....................:+******++==-==++**##%@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%@@@@%@@@@@=:..:::::::...........:=*+*#**#**+++++**##%@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%@@@@%@@%@%-:::::-----=:........:=+******##%######%%@@@%@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%%@@%%%@@@@+::-+**#=:.....=##:==+***%%#*****##%@@@@@@@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%%@@%@%%@@@@-:-+-##-........:+=%@@@@%#******##@@@@@@@@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%#@%%@@%%@@@@@@-:==.#@%+.....+%*#@%*@@@@@***#%@@@@@@@@@@@%@@@@@@@@@@\n"
+    + "%%%%%#%%%#%%%%%%@%%%%%@@@@@%-:-=.:%@@@@@%%%%%-:::%@@@@@@@@@@%@@@@@@@@@@@@@@@@@@@\n"
+    + "%%%%%%%%#%%%%#%@%@%%@@@@@@@%#-.:=:....::+%%%@@@@@@@@%%%%%%#%%@@@@@@@@@@@@@@@@@@@\n"
+    + "%%%#%#%#%%%%#%%%%%%%%@@@@@@@%*-.:--::.......::----=+++*###%%@@@@@@@@@@@@@@@@@@@@\n"
+    + "%%#%%%%#%%%%%%%%@@%%%%@@@@@@@%*-...-....::--==+**########%%@@@@@@@@@%%@@@@@@@@@@\n"
+    + "%%%%%%%#%#%%#%@%@@%%%%@@@@@@@@%+-...::.......-@@@#*+**###%@@@@@@@@@@%@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%@@@@%@%@@@@@@@@@@+::..........=@%@#*++*##%%%@@@@@@@@@%@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%%@%%%@%@%@@@@@@@@@%-:.........+%@@@#*+*#%%%@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%%%@@%@@@@@@@@@@@@@@@@-:.......#%@@@##**##%@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%%%%%%@@%@@@@@@@@@@@@@@@@+:.....+%@@@#**##%@@@@@@@%@@@@@@@@@@@@@@@@\n"
+    + "%%%%%%%%%%%%%%@%@@@%@@@@@@@@@@@@@@@@@@@@%=::.-%@@*#*##@@@@@@@@@%@@@%@@@@@@@@@@@@\n"
+    + "%%%%#%%%%%@%%@%%%@%@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@%@@@@@@@@@@@@@@@@@%@@@@@@@@@@@@\n"
+    + "%#%%#%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@@@@@\n"
+    + "#%%#%%%%@%@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "%##%%%%%%@@@%@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@@@@@@@@@@@\n"
+    + "#%%%%@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "#%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "###%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@#@@%@@@%%%@@%%@@%@@@@@@@@@@@@@@@@@@@@\n"
+    + "%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@%%%@@%%@@@@%@@@@@@%%@@@@@@@@@@@@@@@@@@@\n"
+    + "%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%#%@@@%%%%%%%@@@@@@@@@@@%@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%#%@@%#######%@@@@@@@%%@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@@##%%%#%%%%%@@@@@@@@%%%@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@%%%%%@@@@@@%%%@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%#%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%##%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+--+%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*+=%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@@%#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@%@@@@@@@@@@@@@@@@@@@@%%%%%@@@@@@@@@@@@@%#%@@@@@@@@@@%%%%%%%%@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@%%@@@@@@@@@@%#%@@@@@@@@%%%######%%@@@@@@@@@@\n"
+    + "@@@@@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@%@%%@@@@@@@@##@@@@@@@%%%######%@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%@@%@@@@@*#@@@@%#%%#%#####@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@%%%%%%%%@@@@@@@@@@@@%%%%@@@@@@@+%@@@%%%%%######@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@##%%%%%%%@@%%%%@@@@@@@%@@@@@@+@@@%%%%%######@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@%%##*####%%%%%%%%%%@@@@%@@@@@@+@@@@%%######%@@@@@@@@@@@@@@@@@@\n"
+    + "@@@@@@@@@@@@@@@@@@@@#########%%%%%@@@@@@@@@@%%@@*@@@%######@@@@@@@@@@@@@@@@@@@@@\n";
+    
+    private static final String UNKNOWN_COMMAND = "A curious utterance. I do not recognize it. Try: todo, deadline, event, list, mark, unmark, bye";
+    private static final String TODO_EMPTY = "Even ideas need words. The description of a todo cannot be empty.";
+    private static final String DEADLINE_NEEDS_BY = "A deadline demands a /by. Example: deadline return book /by Sunday";
+    private static final String DEADLINE_EMPTY = "Give it both flesh and hour: description and /by must not be empty.";
+    private static final String EVENT_NEEDS_FROM_TO = "An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm";
+    private static final String MARK_OK = "A tick for triumph. Marked as done:";
+    private static final String UNMARK_OK = "Undone, for now. Marked as not done:";
+    private static final String ADDED_HEADER = "Got it. I have inscribed this task:";
+    private static final String LIST_HEADER = "Your current conspiracies (tasks):";
+    private static final String EMPTY_INPUT = "Even silence speaks volumes. But I need words to understand you.";
+    
     /**
      * The main entry point of the V program.
      * Displays the V logo, greets the user, processes user input in a loop,
@@ -103,52 +116,97 @@ public class V {
      *
      * @param args Command line arguments (not used)
      */
+    /**
+     * A custom PrintStream that removes ANSI escape sequences from all output.
+     */
+    private static class NoAnsiPrintStream extends PrintStream {
+        // This pattern matches most common ANSI escape sequences
+        private static final String ANSI_ESCAPE_PATTERN = "\\u001B\\[[\\d;]*[A-Za-z]";
+        
+        public NoAnsiPrintStream(OutputStream out) {
+            super(out, true);
+        }
+        
+        @Override
+        public void print(String s) {
+            if (s != null) {
+                s = s.replaceAll(ANSI_ESCAPE_PATTERN, "");
+            }
+            super.print(s);
+        }
+        
+        @Override
+        public void println(String s) {
+            if (s != null) {
+                s = s.replaceAll(ANSI_ESCAPE_PATTERN, "");
+            }
+            super.println(s);
+        }
+    }
+    
     public static void main(String[] args) {
+        // Replace System.out with our custom PrintStream
+        System.setOut(new NoAnsiPrintStream(System.out));
+        
         showLogo();
         greet();
         
         Scanner scanner = new Scanner(System.in);
-        String userInput;
+        String userInput = ""; // Initialize to empty string
         
         // Main input loop
         do {
-            System.out.print("> ");
-            userInput = scanner.nextLine().trim();
-            
-            String[] parts = userInput.split("\\s+", 2);
-            String command = parts[0].toLowerCase();
-            String arguments = parts.length > 1 ? parts[1] : "";
-            
-            switch (command) {
-            case CMD_LIST:
-                listTasks();
-                break;
-            case CMD_MARK:
-                markTask(arguments);
-                break;
-            case CMD_UNMARK:
-                unmarkTask(arguments);
-                break;
-            case CMD_TODO:
-                addTodo(arguments);
-                break;
-            case CMD_DEADLINE:
-                addDeadline(arguments);
-                break;
-            case CMD_EVENT:
-                addEvent(arguments);
-                break;
-            case CMD_BYE:
-                // Will exit the loop
-                break;
-            default:
-                System.out.println("My dear friend, I'm afraid I don't understand that command.");
-                System.out.println("Try 'todo', 'deadline', 'event', 'list', 'mark', 'unmark', or 'bye'.");
+            try {
+                System.out.print("> ");
+                userInput = scanner.nextLine().trim();
+                
+                if (userInput.trim().isEmpty()) {
+                    throw new DukeException(EMPTY_INPUT);
+                }
+                
+                String[] parts = userInput.split("\\s+", 2);
+                String command = parts[0].toLowerCase();
+                String arguments = parts.length > 1 ? parts[1] : "";
+                
+                switch (command) {
+                case CMD_LIST:
+                    listTasks();
+                    break;
+                case CMD_MARK:
+                    markTask(arguments, true);
+                    break;
+                case CMD_UNMARK:
+                    markTask(arguments, false);
+                    break;
+                case CMD_TODO:
+                    addTodo(arguments);
+                    break;
+                case CMD_DEADLINE:
+                    addDeadline(arguments);
+                    break;
+                case CMD_EVENT:
+                    addEvent(arguments);
+                    break;
+                case CMD_BYE:
+                    // Will exit the loop
+                    break;
+                default:
+                    throw new DukeException(UNKNOWN_COMMAND);
+                }
+            } catch (DukeException e) {
+                showError(e.getMessage());
+            } catch (Exception e) {
+                showError("An unexpected error occurred: " + e.getMessage());
             }
         } while (!userInput.equalsIgnoreCase(CMD_BYE));
         
         farewell();
         scanner.close();
+    }
+    
+    
+    private static void showError(String message) {
+        System.out.println("     " + message);
     }
     
     /**
@@ -162,25 +220,29 @@ public class V {
      * Displays V's theatrical greeting.
      */
     private static void greet() {
-        System.out.println("Voilà! In view, a humble voice of the vox populi.");
+        System.out.println("Voilà! In view, a voice of the vox populi.");
+        System.out.println();
+        System.out.println("Behold—the visage behind the letter.");
+        System.out.println();
         System.out.println("A humble vessel of verbosity and vigilance.");
-        System.out.println(" I am V.");
-        System.out.println(" What can I do for you?");
+        System.out.println();
+        System.out.println("I am V. Voice for the voiceless. What do you require?");
+        System.out.println();
     }
     
     /**
      * Displays all tasks with dramatic flair.
      */
     private static void listTasks() {
-        System.out.println(DIVIDER + "     Behold, your list of tasks:");
+        System.out.println("     " + LIST_HEADER);
         if (taskCount == 0) {
-            System.out.println("     You have no tasks, my friend. How... peaceful.\n" + DIVIDER);
+            System.out.println("     The stage is bare, the script unwritten. No tasks yet to perform.");
         } else {
             for (int i = 0; i < taskCount; i++) {
-                System.out.printf("     %d.%s\n", i + 1, tasks[i]);
+                System.out.printf("     %d.%s%n", i + 1, tasks[i]);
             }
-            System.out.print(DIVIDER);
         }
+        System.out.print(DIVIDER);
     }
     
     /**
@@ -188,128 +250,118 @@ public class V {
      * 
      * @param description The task description to be added
      */
-    private static void addTodo(String description) {
+    private static void addTodo(String description) throws DukeException {
         if (description.trim().isEmpty()) {
-            System.out.println(DIVIDER + "     My dear friend, even a simple 'todo' requires a description.\n" + DIVIDER);
-            return;
+            throw new DukeException(TODO_EMPTY);
         }
         
         if (taskCount >= MAX_TASKS) {
-            System.out.println(DIVIDER + "     My apologies, but your list of tasks has reached its limit.\n" + DIVIDER);
-            return;
+            throw new DukeException("My apologies, but your list of tasks has reached its limit.");
         }
         
         tasks[taskCount] = new Todo(description);
         taskCount++;
-        
         printTaskAdded(tasks[taskCount-1]);
     }
     
-    private static void addDeadline(String arguments) {
-        if (!arguments.contains(DELIMITER_BY)) {
-            System.out.println(DIVIDER + "     A deadline requires both a description and a '/by' time.\n" + DIVIDER);
-            return;
+    private static void addDeadline(String arguments) throws DukeException {
+        arguments = arguments.trim();
+        if (arguments.isEmpty()) {
+            throw new DukeException(DEADLINE_EMPTY);
         }
         
-        String[] parts = arguments.split("\\s" + DELIMITER_BY + "\\s*", 2);
+        if (!arguments.contains(DELIMITER_BY)) {
+            throw new DukeException(DEADLINE_NEEDS_BY);
+        }
+        
+        String[] parts = arguments.split("\\s*" + DELIMITER_BY + "\\s*", 2);
         String description = parts[0].trim();
         String by = parts.length > 1 ? parts[1].trim() : "";
         
         if (description.isEmpty() || by.isEmpty()) {
-            System.out.println(DIVIDER + "     Both description and deadline time are required.\n" + DIVIDER);
-            return;
+            throw new DukeException(DEADLINE_EMPTY);
         }
         
         if (taskCount >= MAX_TASKS) {
-            System.out.println(DIVIDER + "     My apologies, but your list of tasks has reached its limit.\n" + DIVIDER);
-            return;
+            throw new DukeException("My apologies, but your list of tasks has reached its limit.");
         }
         
         tasks[taskCount] = new Deadline(description, by);
         taskCount++;
-        
         printTaskAdded(tasks[taskCount-1]);
     }
     
-    private static void addEvent(String arguments) {
+    /**
+     * Adds a new event task with start and end times.
+     * 
+     * @param arguments The event details including description, /from and /to times
+     * @throws DukeException If the input format is invalid
+     */
+    private static void addEvent(String arguments) throws DukeException {
+        arguments = arguments.trim();
+        if (arguments.isEmpty()) {
+            throw new DukeException("An event requires a description and time range.");
+        }
+        
         if (!arguments.contains(DELIMITER_FROM) || !arguments.contains(DELIMITER_TO)) {
-            System.out.println(DIVIDER + "     An event requires '/from' and '/to' times.\n" + DIVIDER);
-            return;
+            throw new DukeException(EVENT_NEEDS_FROM_TO);
         }
         
-        String[] parts = arguments.split("\\s" + DELIMITER_FROM + "\\s*", 2);
-        String description = parts[0].trim();
-        
-        if (parts.length < 2) {
-            System.out.println(DIVIDER + "     Please specify both start and end times.\n" + DIVIDER);
-            return;
+        // Split into description and time parts
+        String[] firstSplit = arguments.split("\\s*" + DELIMITER_FROM + "\\s*", 2);
+        if (firstSplit.length < 2) {
+            throw new DukeException("Event must include both start and end times.");
         }
         
-        String[] timeParts = parts[1].split("\\s" + DELIMITER_TO + "\\s*", 2);
+        String description = firstSplit[0].trim();
+        String[] timeParts = firstSplit[1].split("\\s*" + DELIMITER_TO + "\\s*", 2);
+        
+        if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
+            throw new DukeException("Both start and end times must be provided.");
+        }
+        
         String from = timeParts[0].trim();
-        String to = timeParts.length > 1 ? timeParts[1].trim() : "";
+        String to = timeParts[1].trim();
         
-        if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
-            System.out.println(DIVIDER + "     Description, start time, and end time are all required.\n" + DIVIDER);
-            return;
+        if (description.isEmpty()) {
+            throw new DukeException("The description of an event cannot be empty.");
         }
         
         if (taskCount >= MAX_TASKS) {
-            System.out.println(DIVIDER + "     My apologies, but your list of tasks has reached its limit.\n" + DIVIDER);
-            return;
+            throw new DukeException("My apologies, but your list of tasks has reached its limit.");
         }
         
         tasks[taskCount] = new Event(description, from, to);
         taskCount++;
-        
         printTaskAdded(tasks[taskCount-1]);
     }
-    
-    private static void printTaskAdded(Task task) {
-        System.out.println(DIVIDER + "     Got it. I've added this task:");
-        System.out.println("       " + task);
-        System.out.printf("     Now you have %d task%s in the list.\n" + DIVIDER, 
-                taskCount, taskCount == 1 ? "" : "s");
-    }
-    
     /**
-     * Marks a task as done based on the user's command.
+     * Marks a task as done or not done based on the user's command.
      * 
-     * @param command The user's mark command (e.g., "mark 1")
+     * @param argument The user's mark/unmark command (e.g., "mark 1" or "unmark 1")
+     * @param isDone Whether to mark as done (true) or not done (false)
      */
-    private static void markTask(String argument) {
-        try {
-            int taskNum = Integer.parseInt(argument.trim()) - 1;
-            if (taskNum >= 0 && taskNum < taskCount) {
-                tasks[taskNum].mark();
-                System.out.println(DIVIDER + "     A task fulfilled! Marked as done:");
-                System.out.println("       " + tasks[taskNum] + "\n" + DIVIDER);
-            } else {
-                System.out.println(DIVIDER + "     My dear friend, that task number is but an illusion.\n" + DIVIDER);
-            }
-        } catch (NumberFormatException e) {
-            System.out.println(DIVIDER + "     Pray, tell me the number of the task you wish to mark.\n" + DIVIDER);
+    private static void markTask(String argument, boolean isDone) throws DukeException {
+        if (argument.trim().isEmpty()) {
+            throw new DukeException("Which task shall I mark? A number, if you please.");
         }
-    }
-    
-    /**
-     * Marks a task as not done based on the user's command.
-     * 
-     * @param command The user's unmark command (e.g., "unmark 1")
-     */
-    private static void unmarkTask(String argument) {
+        
         try {
-            int taskNum = Integer.parseInt(argument.trim()) - 1;
-            if (taskNum >= 0 && taskNum < taskCount) {
-                tasks[taskNum].unmark();
-                System.out.println(DIVIDER + "     Very well, I've marked this task as not done:");
-                System.out.println("       " + tasks[taskNum] + "\n" + DIVIDER);
-            } else {
-                System.out.println(DIVIDER + "     My dear friend, that task number is but an illusion.\n" + DIVIDER);
+            int index = Integer.parseInt(argument.trim()) - 1;
+            if (index < 0 || index >= taskCount) {
+                throw new DukeException(String.format("Task %d remains unwritten in our grand narrative.", index + 1));
             }
+            
+            if (isDone) {
+                tasks[index].mark();
+            } else {
+                tasks[index].unmark();
+            }
+            
+            System.out.println("     " + (isDone ? MARK_OK : UNMARK_OK));
+            System.out.println("       " + tasks[index]);
         } catch (NumberFormatException e) {
-            System.out.println(DIVIDER + "     Pray, tell me the number of the task you wish to unmark.");
-            System.out.println("     (e.g., 'unmark 2' to mark task 2 as not done)\n" + DIVIDER);
+            throw new DukeException("Numbers, please. Try: " + (isDone ? "mark" : "unmark") + " 2");
         }
     }
     
@@ -317,10 +369,22 @@ public class V {
      * Displays V's theatrical farewell message.
      */
     private static void farewell() {
-        System.out.println("\n" + DIVIDER +
-            "    The curtain falls on our performance today.\n" +
-            "    Until we meet again, remember: ideas are bulletproof.\n" +
-            "    Farewell, my friend.\n" +
-            DIVIDER);
+        System.out.println("The curtain descends, everything ends too soon, too soon.");
+        System.out.println("Beneath this mask there is more than flesh. Beneath this mask there is an idea.");
+        System.out.println("And ideas are bulletproof!");
+        System.out.println("Farewell. May we meet again in the shadows.");
     }
+    
+    /**
+     * Prints the task addition message with proper formatting.
+     * 
+     * @param task The task that was added
+     */
+    private static void printTaskAdded(Task task) {
+        System.out.println("     " + ADDED_HEADER);
+        System.out.println("       " + task);
+        System.out.printf("     The ledger now holds %d task%s.%n", 
+                taskCount, taskCount == 1 ? "" : "s");
+    }
+    
 }
