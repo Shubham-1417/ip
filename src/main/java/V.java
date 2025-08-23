@@ -1,15 +1,14 @@
 import java.util.Scanner;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 /**
  * V - A personal assistant with a theatrical flair, inspired by V for Vendetta.
  * This program greets the user, manages tasks, and bids them farewell.
  */
 public class V {
-    private static final int MAX_TASKS = 100;
-    private static final Task[] tasks = new Task[MAX_TASKS];
-    private static int taskCount = 0;
+    private static final ArrayList<Task> tasks = new ArrayList<>();
     
     // Command constants
     private static final String CMD_LIST = "list";
@@ -18,6 +17,7 @@ public class V {
     private static final String CMD_TODO = "todo";
     private static final String CMD_DEADLINE = "deadline";
     private static final String CMD_EVENT = "event";
+    private static final String CMD_DELETE = "delete";
     private static final String CMD_BYE = "bye";
     
     // Delimiters
@@ -187,6 +187,9 @@ public class V {
                 case CMD_EVENT:
                     addEvent(arguments);
                     break;
+                case CMD_DELETE:
+                    deleteTask(arguments);
+                    break;
                 case CMD_BYE:
                     // Will exit the loop
                     break;
@@ -210,6 +213,169 @@ public class V {
     }
     
     /**
+     * Lists all tasks currently being tracked.
+     */
+    private static void listTasks() {
+        if (tasks.isEmpty()) {
+            System.out.println("     Your list of tasks is empty, like a stage before the play begins.");
+            return;
+        }
+        
+        System.out.println("     " + LIST_HEADER);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println("     " + (i + 1) + "." + tasks.get(i));
+        }
+    }
+    
+    /**
+     * Marks a task as done or not done.
+     * 
+     * @param args The task number to mark
+     * @param isDone Whether to mark as done (true) or not done (false)
+     * @throws DukeException If the task number is invalid
+     */
+    private static void markTask(String args, boolean isDone) throws DukeException {
+        try {
+            int taskIndex = Integer.parseInt(args.trim()) - 1;
+            if (taskIndex < 0 || taskIndex >= tasks.size()) {
+                throw new DukeException("No such task exists. The number must be between 1 and " + tasks.size());
+            }
+            
+            Task task = tasks.get(taskIndex);
+            if (isDone) {
+                task.mark();
+                System.out.println("     " + MARK_OK);
+            } else {
+                task.unmark();
+                System.out.println("     " + UNMARK_OK);
+            }
+            System.out.println("       " + task);
+        } catch (NumberFormatException e) {
+            throw new DukeException("The task number must be a valid number.");
+        }
+    }
+    
+    /**
+     * Adds a new todo task.
+     * 
+     * @param description The description of the todo
+     * @throws DukeException If the description is empty
+     */
+    private static void addTodo(String description) throws DukeException {
+        if (description.trim().isEmpty()) {
+            throw new DukeException(TODO_EMPTY);
+        }
+        
+        Task newTask = new Todo(description);
+        tasks.add(newTask);
+        printTaskAdded(newTask);
+    }
+    
+    /**
+     * Adds a new deadline task.
+     * 
+     * @param args The description and deadline in the format "description /by when"
+     * @throws DukeException If the format is invalid
+     */
+    private static void addDeadline(String args) throws DukeException {
+        String[] parts = args.split("\\s+/by\\s+", 2);
+        if (parts.length < 2) {
+            throw new DukeException(DEADLINE_NEEDS_BY);
+        }
+        
+        String description = parts[0].trim();
+        String by = parts[1].trim();
+        
+        if (description.isEmpty() || by.isEmpty()) {
+            throw new DukeException(DEADLINE_EMPTY);
+        }
+        
+        Task newTask = new Deadline(description, by);
+        tasks.add(newTask);
+        printTaskAdded(newTask);
+    }
+    
+    /**
+     * Adds a new event task.
+     * 
+     * @param args The description and time range in the format "description /from start /to end"
+     * @throws DukeException If the format is invalid
+     */
+    private static void addEvent(String args) throws DukeException {
+        String[] parts = args.split("\\s+/from\\s+", 2);
+        if (parts.length < 2) {
+            throw new DukeException(EVENT_NEEDS_FROM_TO);
+        }
+        
+        String description = parts[0].trim();
+        String[] timeParts = parts[1].split("\\s+/to\\s+", 2);
+        
+        if (timeParts.length < 2) {
+            throw new DukeException(EVENT_NEEDS_FROM_TO);
+        }
+        
+        String from = timeParts[0].trim();
+        String to = timeParts[1].trim();
+        
+        if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
+            throw new DukeException("An event requires a description, start time, and end time.");
+        }
+        
+        Task newTask = new Event(description, from, to);
+        tasks.add(newTask);
+        printTaskAdded(newTask);
+    }
+    
+    /**
+     * Deletes a task from the list.
+     * 
+     * @param args The task number to delete
+     * @throws DukeException If the task number is invalid
+     */
+    private static void deleteTask(String args) throws DukeException {
+        try {
+            int taskIndex = Integer.parseInt(args.trim()) - 1;
+            if (taskIndex < 0 || taskIndex >= tasks.size()) {
+                throw new DukeException("No such task exists. The number must be between 1 and " + tasks.size());
+            }
+            
+            Task removedTask = tasks.remove(taskIndex);
+            System.out.println(DIVIDER);
+            System.out.println("     Very well. I've removed this task from the records:");
+            System.out.println("       " + removedTask);
+            System.out.println("     Now you have " + tasks.size() + " task" + (tasks.size() != 1 ? "s" : "") + " in the list.");
+            System.out.print(DIVIDER);
+        } catch (NumberFormatException e) {
+            throw new DukeException("The task number must be a valid number.");
+        }
+    }
+    
+    /**
+     * Prints a message when a task is added.
+     * 
+     * @param task The task that was added
+     */
+    private static void printTaskAdded(Task task) {
+        System.out.println(DIVIDER);
+        System.out.println("     " + ADDED_HEADER);
+        System.out.println("       " + task);
+        System.out.println("     Now you have " + tasks.size() + " task" + (tasks.size() != 1 ? "s" : "") + " in the list.");
+        System.out.print(DIVIDER);
+    }
+    
+    /**
+     * Displays V's farewell message.
+     */
+    private static void farewell() {
+        System.out.println("\n" + DIVIDER);
+        System.out.println("     The curtain descends, everything ends too soon, too soon.");
+        System.out.println("     Beneath this mask there is more than flesh. Beneath this mask there is an idea.");
+        System.out.println("     And ideas are bulletproof!");
+        System.out.println("     Farewell. May we meet again in the shadows.");
+        System.out.print(DIVIDER);
+    }
+    
+    /**
      * Displays the V logo.
      */
     private static void showLogo() {
@@ -229,162 +395,4 @@ public class V {
         System.out.println("I am V. Voice for the voiceless. What do you require?");
         System.out.println();
     }
-    
-    /**
-     * Displays all tasks with dramatic flair.
-     */
-    private static void listTasks() {
-        System.out.println("     " + LIST_HEADER);
-        if (taskCount == 0) {
-            System.out.println("     The stage is bare, the script unwritten. No tasks yet to perform.");
-        } else {
-            for (int i = 0; i < taskCount; i++) {
-                System.out.printf("     %d.%s%n", i + 1, tasks[i]);
-            }
-        }
-        System.out.print(DIVIDER);
-    }
-    
-    /**
-     * Adds a new task to the task list with dramatic flair.
-     * 
-     * @param description The task description to be added
-     */
-    private static void addTodo(String description) throws DukeException {
-        if (description.trim().isEmpty()) {
-            throw new DukeException(TODO_EMPTY);
-        }
-        
-        if (taskCount >= MAX_TASKS) {
-            throw new DukeException("My apologies, but your list of tasks has reached its limit.");
-        }
-        
-        tasks[taskCount] = new Todo(description);
-        taskCount++;
-        printTaskAdded(tasks[taskCount-1]);
-    }
-    
-    private static void addDeadline(String arguments) throws DukeException {
-        arguments = arguments.trim();
-        if (arguments.isEmpty()) {
-            throw new DukeException(DEADLINE_EMPTY);
-        }
-        
-        if (!arguments.contains(DELIMITER_BY)) {
-            throw new DukeException(DEADLINE_NEEDS_BY);
-        }
-        
-        String[] parts = arguments.split("\\s*" + DELIMITER_BY + "\\s*", 2);
-        String description = parts[0].trim();
-        String by = parts.length > 1 ? parts[1].trim() : "";
-        
-        if (description.isEmpty() || by.isEmpty()) {
-            throw new DukeException(DEADLINE_EMPTY);
-        }
-        
-        if (taskCount >= MAX_TASKS) {
-            throw new DukeException("My apologies, but your list of tasks has reached its limit.");
-        }
-        
-        tasks[taskCount] = new Deadline(description, by);
-        taskCount++;
-        printTaskAdded(tasks[taskCount-1]);
-    }
-    
-    /**
-     * Adds a new event task with start and end times.
-     * 
-     * @param arguments The event details including description, /from and /to times
-     * @throws DukeException If the input format is invalid
-     */
-    private static void addEvent(String arguments) throws DukeException {
-        arguments = arguments.trim();
-        if (arguments.isEmpty()) {
-            throw new DukeException("An event requires a description and time range.");
-        }
-        
-        if (!arguments.contains(DELIMITER_FROM) || !arguments.contains(DELIMITER_TO)) {
-            throw new DukeException(EVENT_NEEDS_FROM_TO);
-        }
-        
-        // Split into description and time parts
-        String[] firstSplit = arguments.split("\\s*" + DELIMITER_FROM + "\\s*", 2);
-        if (firstSplit.length < 2) {
-            throw new DukeException("Event must include both start and end times.");
-        }
-        
-        String description = firstSplit[0].trim();
-        String[] timeParts = firstSplit[1].split("\\s*" + DELIMITER_TO + "\\s*", 2);
-        
-        if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
-            throw new DukeException("Both start and end times must be provided.");
-        }
-        
-        String from = timeParts[0].trim();
-        String to = timeParts[1].trim();
-        
-        if (description.isEmpty()) {
-            throw new DukeException("The description of an event cannot be empty.");
-        }
-        
-        if (taskCount >= MAX_TASKS) {
-            throw new DukeException("My apologies, but your list of tasks has reached its limit.");
-        }
-        
-        tasks[taskCount] = new Event(description, from, to);
-        taskCount++;
-        printTaskAdded(tasks[taskCount-1]);
-    }
-    /**
-     * Marks a task as done or not done based on the user's command.
-     * 
-     * @param argument The user's mark/unmark command (e.g., "mark 1" or "unmark 1")
-     * @param isDone Whether to mark as done (true) or not done (false)
-     */
-    private static void markTask(String argument, boolean isDone) throws DukeException {
-        if (argument.trim().isEmpty()) {
-            throw new DukeException("Which task shall I mark? A number, if you please.");
-        }
-        
-        try {
-            int index = Integer.parseInt(argument.trim()) - 1;
-            if (index < 0 || index >= taskCount) {
-                throw new DukeException(String.format("Task %d remains unwritten in our grand narrative.", index + 1));
-            }
-            
-            if (isDone) {
-                tasks[index].mark();
-            } else {
-                tasks[index].unmark();
-            }
-            
-            System.out.println("     " + (isDone ? MARK_OK : UNMARK_OK));
-            System.out.println("       " + tasks[index]);
-        } catch (NumberFormatException e) {
-            throw new DukeException("Numbers, please. Try: " + (isDone ? "mark" : "unmark") + " 2");
-        }
-    }
-    
-    /**
-     * Displays V's theatrical farewell message.
-     */
-    private static void farewell() {
-        System.out.println("The curtain descends, everything ends too soon, too soon.");
-        System.out.println("Beneath this mask there is more than flesh. Beneath this mask there is an idea.");
-        System.out.println("And ideas are bulletproof!");
-        System.out.println("Farewell. May we meet again in the shadows.");
-    }
-    
-    /**
-     * Prints the task addition message with proper formatting.
-     * 
-     * @param task The task that was added
-     */
-    private static void printTaskAdded(Task task) {
-        System.out.println("     " + ADDED_HEADER);
-        System.out.println("       " + task);
-        System.out.printf("     The ledger now holds %d task%s.%n", 
-                taskCount, taskCount == 1 ? "" : "s");
-    }
-    
 }

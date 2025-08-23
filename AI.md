@@ -22,7 +22,7 @@ Added task management with V's dramatic style:
 
 AI Usage: Used AI to help structure the task management system and generate V's dramatic responses. Manually implemented all logic and verified behavior.
 
-## Week 3 – Level‑3
+## Week 2 – Level‑3
 Refactored to use Task class and added mark/unmark functionality:
 - Created Task class with description and isDone state
 - Implemented mark() and unmark() methods with V's dramatic flair
@@ -33,7 +33,7 @@ Refactored to use Task class and added mark/unmark functionality:
 
 AI Usage: Used AI to help design the Task class and generate V's dramatic responses for the mark/unmark functionality. Manually implemented the core logic and verified behavior.
 
-## Week 3 – Level‑4
+## Week 2 – Level‑4
 Implemented task types (Todo, Deadline, Event) with inheritance:
 - Created abstract Task class with common functionality
 - Extended Task with Todo, Deadline, and Event subclasses
@@ -44,3 +44,27 @@ Implemented task types (Todo, Deadline, Event) with inheritance:
 - Added input validation and error handling for all commands
 
 AI Usage: Used AI to help design the class hierarchy and generate V's dramatic responses. Manually implemented the command parsing and task management logic.
+
+## Week 2 – Level‑5
+Refactored to use ArrayList for dynamic task management:
+- Replaced fixed-size array with `ArrayList<Task>`
+- Removed MAX_TASKS limitation
+- Updated all task operations to use ArrayList methods
+- Added proper error handling for empty lists
+- Maintained V's theatrical responses throughout
+- Improved task counting with proper pluralization
+- Added more descriptive error messages
+
+AI Usage: Used AI to help refactor the code from array to ArrayList. Manually implemented all logic and verified behavior.
+
+## Week 2 – Level‑6
+Added delete functionality and improved user experience:
+- Implemented 'delete' command to remove tasks
+- Added proper task renumbering after deletion
+- Enhanced error handling for invalid task numbers
+- Updated help text to include delete command
+- Improved output formatting for better readability
+- Added confirmation messages for task deletion
+- Maintained V's dramatic personality in all responses
+
+AI Usage: Used AI to help design the delete functionality and generate V's dramatic responses. Manually implemented the core logic and verified behavior.

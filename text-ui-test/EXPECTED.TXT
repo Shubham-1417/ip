@@ -81,34 +81,42 @@ I am V. Voice for the voiceless. What do you require?
 >      A curious utterance. I do not recognize it. Try: todo, deadline, event, list, mark, unmark, bye
 >      A curious utterance. I do not recognize it. Try: todo, deadline, event, list, mark, unmark, bye
 >      Even ideas need words. The description of a todo cannot be empty.
->      Give it both flesh and hour: description and /by must not be empty.
 >      A deadline demands a /by. Example: deadline return book /by Sunday
->      Give it both flesh and hour: description and /by must not be empty.
->      An event requires a description and time range.
+>      A deadline demands a /by. Example: deadline return book /by Sunday
+>      A deadline demands a /by. Example: deadline return book /by Sunday
 >      An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm
 >      An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm
 >      An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm
 >      An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm
->      Which task shall I mark? A number, if you please.
->      Numbers, please. Try: mark 2
->      Task 999 remains unwritten in our grand narrative.
->      Which task shall I mark? A number, if you please.
->      Numbers, please. Try: unmark 2
->      Task 999 remains unwritten in our grand narrative.
->      Got it. I have inscribed this task:
+>      An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm
+>      The task number must be a valid number.
+>      The task number must be a valid number.
+>      No such task exists. The number must be between 1 and 0
+>      The task number must be a valid number.
+>      The task number must be a valid number.
+>      No such task exists. The number must be between 1 and 0
+>     ____________________________________________________________
+
+     Got it. I have inscribed this task:
        [T][ ] borrow book
-     The ledger now holds 1 task.
->      Got it. I have inscribed this task:
+     Now you have 1 task in the list.
+    ____________________________________________________________
+>     ____________________________________________________________
+
+     Got it. I have inscribed this task:
        [D][ ] return book (by: Sunday)
-     The ledger now holds 2 tasks.
->      Got it. I have inscribed this task:
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+>     ____________________________________________________________
+
+     Got it. I have inscribed this task:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     The ledger now holds 3 tasks.
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
 >      Your current conspiracies (tasks):
      1.[T][ ] borrow book
      2.[D][ ] return book (by: Sunday)
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
-    ____________________________________________________________
 >      A tick for triumph. Marked as done:
        [T][X] borrow book
 >      Undone, for now. Marked as not done:
@@ -117,17 +125,29 @@ I am V. Voice for the voiceless. What do you require?
      1.[T][ ] borrow book
      2.[D][ ] return book (by: Sunday)
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
-    ____________________________________________________________
->      Got it. I have inscribed this task:
+>     ____________________________________________________________
+
+     Got it. I have inscribed this task:
        [T][ ] task1
-     The ledger now holds 4 tasks.
->      Got it. I have inscribed this task:
+     Now you have 4 tasks in the list.
+    ____________________________________________________________
+>     ____________________________________________________________
+
+     Got it. I have inscribed this task:
        [T][ ] task2
-     The ledger now holds 5 tasks.
->      Got it. I have inscribed this task:
+     Now you have 5 tasks in the list.
+    ____________________________________________________________
+>     ____________________________________________________________
+
+     Got it. I have inscribed this task:
        [T][ ] task3
-     The ledger now holds 6 tasks.
-> The curtain descends, everything ends too soon, too soon.
-Beneath this mask there is more than flesh. Beneath this mask there is an idea.
-And ideas are bulletproof!
-Farewell. May we meet again in the shadows.
+     Now you have 6 tasks in the list.
+    ____________________________________________________________
+> 
+    ____________________________________________________________
+
+     The curtain descends, everything ends too soon, too soon.
+     Beneath this mask there is more than flesh. Beneath this mask there is an idea.
+     And ideas are bulletproof!
+     Farewell. May we meet again in the shadows.
+    ____________________________________________________________
