@@ -1,8 +1,7 @@
 import storage.Storage;
-import task.Task;
+import task.TaskList;
 import task.Todo;
 import task.DukeException;
-import java.util.List;
 import java.io.File;
 
 public class TestStorage {
@@ -13,10 +12,9 @@ public class TestStorage {
             Storage storage = new Storage(testFile);
             
             // Create some test tasks
-            List<Task> tasks = List.of(
-                new Todo("Test task 1"),
-                new Todo("Test task 2")
-            );
+            TaskList tasks = new TaskList();
+            tasks.add(new Todo("Test task 1"));
+            tasks.add(new Todo("Test task 2"));
             
             // Save tasks
             System.out.println("Saving tasks...");
@@ -25,7 +23,7 @@ public class TestStorage {
             
             // Load tasks
             System.out.println("Loading tasks...");
-            List<Task> loadedTasks = storage.load();
+            TaskList loadedTasks = storage.load();
             System.out.println("Tasks loaded successfully!");
             
             // Verify loaded tasks

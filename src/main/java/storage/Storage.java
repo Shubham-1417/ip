@@ -7,10 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import task.Task;
+import task.TaskList;
 import task.Todo;
 import task.Deadline;
 import task.Event;
@@ -40,14 +40,21 @@ public class Storage {
     }
 
     /**
-     * Loads tasks from the storage file.
+     * Loads tasks from the storage file into a TaskList.
      * 
-     * @return A list of tasks
+     * @return A TaskList containing the loaded tasks
      * @throws DukeException If there's an error reading the file
      */
-    public List<Task> load() throws DukeException {
-        List<Task> tasks = new ArrayList<>();
+    public TaskList load() throws DukeException {
+        TaskList tasks = new TaskList();
         File file = new File(filePath).getAbsoluteFile();
+        System.out.println("Attempting to load tasks from: " + file.getAbsolutePath());
+        
+        // If file doesn't exist, return empty task list
+        if (!file.exists()) {
+            System.out.println("No existing data file found. Starting with an empty task list.");
+            return tasks;
+        }
         Path path = file.toPath();
         
         System.out.println("Loading tasks from: " + path);
@@ -98,20 +105,19 @@ public class Storage {
                 
                 tasks.add(task);
             }
-            
-            return tasks;
         } catch (IOException e) {
             throw new DukeException("Error reading from file: " + e.getMessage());
         }
+        return tasks;
     }
     
     /**
      * Saves tasks to the storage file.
      * 
-     * @param tasks The list of tasks to save
+     * @param tasks The TaskList containing tasks to save
      * @throws DukeException If there's an error writing to the file
      */
-    public void save(List<Task> tasks) throws DukeException {
+    public void save(TaskList tasks) throws DukeException {
         try {
             File file = new File(filePath).getAbsoluteFile();
             System.out.println("Saving tasks to: " + file.getAbsolutePath());
@@ -119,20 +125,20 @@ public class Storage {
             // Ensure parent directory exists
             File parent = file.getParentFile();
             if (parent != null) {
-                System.out.println("Creating parent directory: " + parent.getAbsolutePath());
-                if (!parent.exists() && !parent.mkdirs()) {
-                    throw new IOException("Failed to create directory: " + parent.getAbsolutePath());
+                parent.mkdirs();
+            }
+            
+            try (FileWriter fw = new FileWriter(file)) {
+                for (int i = 0; i < tasks.size(); i++) {
+                    fw.write(tasks.get(i).toSaveString() + System.lineSeparator());
                 }
             }
             
-            System.out.println("Writing " + tasks.size() + " tasks to file");
-            try (FileWriter writer = new FileWriter(file)) {
-                for (Task task : tasks) {
-                    writer.write(task.toSaveString() + System.lineSeparator());
-                }
-            }
+            System.out.println("Successfully saved " + tasks.size() + " tasks.");
         } catch (IOException e) {
-            throw new DukeException("Error writing to file: " + e.getMessage());
+            System.err.println("Error saving tasks: " + e.getMessage());
+            e.printStackTrace();
+            throw new DukeException("Error saving tasks: " + e.getMessage());
         }
     }
 }
