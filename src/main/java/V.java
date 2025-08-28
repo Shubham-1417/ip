@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import enums.CommandType;
 import task.Task;
@@ -99,8 +101,9 @@ public class V {
     
     private static final String UNKNOWN_COMMAND = "A curious utterance. I do not recognize it. Try: todo, deadline, event, list, mark, unmark, bye";
     private static final String TODO_EMPTY = "Even ideas need words. The description of a todo cannot be empty.";
-    private static final String DEADLINE_NEEDS_BY = "A deadline demands a /by. Example: deadline return book /by Sunday";
+    private static final String DEADLINE_NEEDS_BY = "A deadline demands a /by. Example: deadline return book /by 2023-08-30";
     private static final String DEADLINE_EMPTY = "Give it both flesh and hour: description and /by must not be empty.";
+    private static final String INVALID_DATE_FORMAT = "Use date format yyyy-MM-dd (e.g., 2023-08-30).";
     private static final String EVENT_NEEDS_FROM_TO = "An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm";
     private static final String MARK_OK = "A tick for triumph. Marked as done:";
     private static final String UNMARK_OK = "Undone, for now. Marked as not done:";
@@ -303,8 +306,13 @@ public class V {
             throw new DukeException(DEADLINE_EMPTY);
         }
         
-        Task newTask = new Deadline(description, by);
-        addTask(newTask);
+        try {
+            LocalDate date = LocalDate.parse(by);
+            Task newTask = new Deadline(description, date);
+            addTask(newTask);
+        } catch (DateTimeParseException e) {
+            throw new DukeException(INVALID_DATE_FORMAT);
+        }
     }
     
     /**

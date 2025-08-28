@@ -1,21 +1,24 @@
 package task;
 
 import enums.TaskType;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * A task that needs to be done before a specific date/time.
  * A promise with a deadline, a race against time itself.
  */
 public class Deadline extends Task {
-    protected final String by;
+    protected final LocalDate by;
+    private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM d yyyy");
 
     /**
-     * Creates a new Deadline task with description and due date/time.
+     * Creates a new Deadline task with description and due date.
      * 
      * @param description The purpose of this task
-     * @param by When this task must be completed by
+     * @param by The date when this task must be completed by (in yyyy-MM-dd format)
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDate by) {
         super(description);
         this.by = by;
     }
@@ -37,11 +40,11 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + by.format(DISPLAY_FORMAT) + ")";
     }
     
     @Override
     public String toSaveString() {
-        return "D | " + (isDone() ? "1" : "0") + " | " + getDescription() + " | " + by;
+        return "D | " + (isDone() ? "1" : "0") + " | " + getDescription() + " | " + by.toString();
     }
 }
