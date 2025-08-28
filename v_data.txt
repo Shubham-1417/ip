@@ -1,0 +1,10 @@
+T | 0 | Buy groceries
+D | 0 | Return book | Sunday
+E | 0 | Team meeting | Mon 2pm | 3pm
+T | 0 | borrow book
+D | 0 | return book | Sunday
+E | 0 | project meeting | Mon 2pm | 4pm
+T | 0 | task1
+T | 0 | task2
+T | 0 | task3
+T | 0 | 6

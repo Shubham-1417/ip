@@ -62,6 +62,37 @@ public abstract class Task {
     public String getStatusIcon() {
         return status.getIcon();
     }
+    
+    /**
+     * Returns a string representation of the task for saving to file.
+     * Subclasses must implement this method.
+     * 
+     * @return A string representation of the task for saving to file
+     * @throws UnsupportedOperationException if the subclass does not implement this method
+     */
+    public String toSaveString() {
+        throw new UnsupportedOperationException("Subclass should implement");
+    }
+    
+    /**
+     * Sets the done status of the task and returns the task for method chaining.
+     * 
+     * @param done The new done status of the task
+     * @return This task for method chaining
+     */
+    public Task setDone(boolean done) {
+        this.status = done ? TaskStatus.DONE : TaskStatus.NOT_DONE;
+        return this;
+    }
+    
+    /**
+     * Returns the description of this task.
+     * 
+     * @return The task description
+     */
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * Returns the type of this task.
