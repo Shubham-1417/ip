@@ -9,6 +9,7 @@ import task.Todo;
 import task.Deadline;
 import task.Event;
 import task.DukeException;
+import storage.Storage;
 
 /**
  * V - A personal assistant with a theatrical flair, inspired by V for Vendetta.
@@ -16,6 +17,7 @@ import task.DukeException;
  */
 public class V {
     private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static final Storage storage = new Storage();
     
     // Delimiters used in string parsing
     private static final String DELIMITER_BY = "/by";
@@ -142,11 +144,26 @@ public class V {
     }
     
     public static void main(String[] args) {
-        // Replace System.out with our custom PrintStream
-        System.setOut(new NoAnsiPrintStream(System.out));
+        // Save the original System.out
+        PrintStream originalOut = System.out;
+        
+        // Set up custom PrintStream for ANSI code filtering
+        System.setOut(new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) {
+                originalOut.write(b);
+            }
+        }));
         
         showLogo();
         greet();
+        
+        try {
+            // Load tasks from storage
+            tasks.addAll(storage.load());
+        } catch (DukeException e) {
+            showError(e.getMessage());
+        }
         
         Scanner scanner = new Scanner(System.in);
         String userInput = ""; // Initialize to empty string
@@ -209,11 +226,6 @@ public class V {
         scanner.close();
     }
     
-    
-    private static void showError(String message) {
-        System.out.println("     " + message);
-    }
-    
     /**
      * Lists all tasks currently being tracked.
      */
@@ -269,8 +281,7 @@ public class V {
         }
         
         Task newTask = new Todo(description);
-        tasks.add(newTask);
-        printTaskAdded(newTask);
+        addTask(newTask);
     }
     
     /**
@@ -293,8 +304,7 @@ public class V {
         }
         
         Task newTask = new Deadline(description, by);
-        tasks.add(newTask);
-        printTaskAdded(newTask);
+        addTask(newTask);
     }
     
     /**
@@ -324,8 +334,7 @@ public class V {
         }
         
         Task newTask = new Event(description, from, to);
-        tasks.add(newTask);
-        printTaskAdded(newTask);
+        addTask(newTask);
     }
     
     /**
@@ -342,11 +351,16 @@ public class V {
             }
             
             Task removedTask = tasks.remove(taskIndex);
-            System.out.println(DIVIDER);
-            System.out.println("     Very well. I've removed this task from the records:");
-            System.out.println("       " + removedTask);
-            System.out.println("     Now you have " + tasks.size() + " task" + (tasks.size() != 1 ? "s" : "") + " in the list.");
-            System.out.print(DIVIDER);
+            try {
+                storage.save(tasks);
+                System.out.println(DIVIDER);
+                System.out.println("     Very well. I've removed this task from the records:");
+                System.out.println("       " + removedTask);
+                System.out.println("     Now you have " + tasks.size() + " task" + (tasks.size() != 1 ? "s" : "") + " in the list.");
+                System.out.print(DIVIDER);
+            } catch (DukeException e) {
+                showError("Failed to save tasks: " + e.getMessage());
+            }
         } catch (NumberFormatException e) {
             throw new DukeException("The task number must be a valid number.");
         }
@@ -357,12 +371,32 @@ public class V {
      * 
      * @param task The task that was added
      */
-    private static void printTaskAdded(Task task) {
+    private static void addTask(Task task) {
+        tasks.add(task);
+        try {
+            storage.save(tasks);
+            System.out.println(DIVIDER);
+            System.out.println("     " + ADDED_HEADER);
+            System.out.println("       " + task);
+            System.out.println("     Now you have " + tasks.size() + " task" + (tasks.size() != 1 ? "s" : "") + " in the list.");
+            System.out.print(DIVIDER);
+        } catch (DukeException e) {
+            showError("Failed to save tasks: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Displays V's farewell message.
+     */
+    /**
+     * Displays an error message to the user.
+     * 
+     * @param message The error message to display
+     */
+    private static void showError(String message) {
         System.out.println(DIVIDER);
-        System.out.println("     " + ADDED_HEADER);
-        System.out.println("       " + task);
-        System.out.println("     Now you have " + tasks.size() + " task" + (tasks.size() != 1 ? "s" : "") + " in the list.");
-        System.out.print(DIVIDER);
+        System.out.println("     " + message);
+        System.out.println(DIVIDER);
     }
     
     /**

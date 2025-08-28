@@ -1,0 +1,10 @@
+todo Buy groceries
+todo Read book
+deadline Return book /by Sunday
+event Team meeting /from Mon 2pm /to 3pm
+list
+mark 1
+list
+delete 2
+list
+bye

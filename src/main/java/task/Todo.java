@@ -20,4 +20,9 @@ public class Todo extends Task {
     public TaskType getTaskType() {
         return TaskType.TODO;
     }
+    
+    @Override
+    public String toSaveString() {
+        return "T | " + (isDone() ? "1" : "0") + " | " + getDescription();
+    }
 }
