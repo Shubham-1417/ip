@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,13 @@ public class Storage {
                         break;
                     case "D":
                         if (parts.length < 4) continue;
-                        task = new Deadline(description, parts[3].trim());
+                        try {
+                            LocalDate date = LocalDate.parse(parts[3].trim());
+                            task = new Deadline(description, date);
+                        } catch (Exception e) {
+                            System.err.println("Error parsing date: " + parts[3].trim());
+                            continue;
+                        }
                         break;
                     case "E":
                         if (parts.length < 5) continue;
