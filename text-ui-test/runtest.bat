@@ -16,7 +16,7 @@ if exist "text-ui-test\ACTUAL.TXT" del "text-ui-test\ACTUAL.TXT"
 
 echo Compiling...
 cd /d "%SRC_DIR%"
-javac -Xlint:none -d "..\..\..\bin" *.java
+javac -Xlint:none -d "..\..\..\bin" -cp "." *.java command\*.java parser\*.java storage\*.java task\*.java ui\*.java
 if errorlevel 1 (
     echo ********** BUILD FAILURE **********
     exit /b 1
