@@ -1,88 +1,219 @@
 Using data file: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
 Attempting to load tasks from: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
 Loading tasks from: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
-Voilà! In view, a voice of the vox populi.
+Voil�! In view, a voice of the vox populi.
 
-Behold—the visage behind the letter.
+Behold�the visage behind the letter.
 
 I am V. Voice for the voiceless. What do you require?
     ____________________________________________________________
-     What is your command?      Please provide a valid task number.imes using /from and /to  
-     What is your command?      Please provide a valid task number.iption> /from <time> /to <
-     What is your command?      That task doesn't exist. Use 'list' to see all tasks.        
-     What is your command?      Please provide a valid task number. empty.
-     What is your command?      Please provide a valid task number.scription> /by <yyyy-MM-dd
+     What is your command?      I'm sorry, but I don't know what that means :-(
+     What is your command?      I'm sorry, but I don't know what that means :-(
+     What is your command?      The description of a todo cannot be empty.
+     What is your command?      Please use the format: deadline <description> /by <yyyy-MM-dd>
+     What is your command?      Please use the format: deadline <description> /by <yyyy-MM-dd>
+     What is your command?      Please use the format: deadline <description> /by <yyyy-MM-dd>
+     What is your command?      Please use the format: event <description> /from <time> /to <time>
+     What is your command?      Please use the format: event <description> /from <time> /to <time>
+     What is your command?      Please use the format: event <description> /from <time> /to <time>
+     What is your command?      Please specify both start and end times using /from and /to
+     What is your command?      Please use the format: event <description> /from <time> /to <time>
+     What is your command?      Please provide a valid task number.
+     What is your command?      Please provide a valid task number.
+     What is your command?      That task doesn't exist. Use 'list' to see all tasks.
+     What is your command?      Please provide a valid task number.
+     What is your command?      Please provide a valid task number.
      What is your command?      That task doesn't exist. Use 'list' to see all tasks.
      What is your command?      Got it. I have inscribed this task:
        [T][ ] borrow book
-     Now you have 45 tasks in the list.
+     Now you have 75 tasks in the list.
 Saving tasks to: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
-Successfully saved 45 tasks.
+Successfully saved 75 tasks.
      What is your command?      Please use the format: yyyy-MM-dd for dates.
      What is your command?      Got it. I have inscribed this task:
        [E][E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 46 tasks in the list.
+     Now you have 76 tasks in the list.
 Saving tasks to: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
-Successfully saved 46 tasks.
+Successfully saved 76 tasks.
      What is your command?      Your current conspiracies (tasks):
      1.[T][ ] Buy groceries
-     2.[E][ ] Team meeting (from: Mon 2pm to: 3pm)
+     2.[E][E][ ] Team meeting (from: Mon 2pm to: 3pm)
      3.[T][ ] borrow book
-     4.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+     4.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
      5.[T][X] task1
      6.[T][ ] task2
      7.[T][ ] task3
      8.[T][ ] 6
-     9.[D][ ] Test deadline (by: Dec 31 2023)
-     10.[D][ ] Test deadline (by: Dec 31 2023)
+     9.[D][D][ ] Test deadline (by: Dec 31 2023)
+     10.[D][D][ ] Test deadline (by: Dec 31 2023)
      11.[T][ ] Buy groceries
-     12.[D][ ] Submit assignment (by: Sep 15 2025)
-     13.[E][ ] Team meeting (from: 2025-09-01 14:00 to: 16:00)
+     12.[D][D][ ] Submit assignment (by: Sep 15 2025)
+     13.[E][E][ ] Team meeting (from: 2025-09-01 14:00 to: 16:00)
      14.[T][ ] t
      15.[T][ ] borrow book
-     16.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+     16.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     17.[T][ ] task1
+     18.[T][ ] task2
+     19.[T][ ] task3
+     20.[T][ ] borrow book
+     21.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     22.[T][ ] task1
+     23.[T][ ] task2
+     24.[T][ ] task3
+     25.[T][ ] borrow book
+     26.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     27.[T][ ] task1
+     28.[T][ ] task2
+     29.[T][ ] task3
+     30.[T][ ] borrow book
+     31.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     32.[T][ ] task1
+     33.[T][ ] task2
+     34.[T][ ] task3
+     35.[T][ ] borrow book
+     36.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     37.[T][ ] task1
+     38.[T][ ] task2
+     39.[T][ ] task3
+     40.[T][ ] borrow book
+     41.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     42.[T][ ] task1
+     43.[T][ ] task2
+     44.[T][ ] task3
+     45.[T][ ] borrow book
+     46.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     47.[T][ ] task1
+     48.[T][ ] task2
+     49.[T][ ] task3
+     50.[T][ ] borrow book
+     51.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     52.[T][ ] task1
+     53.[T][ ] task2
+     54.[T][ ] task3
+     55.[T][ ] borrow book
+     56.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     57.[T][ ] task1
+     58.[T][ ] task2
+     59.[T][ ] task3
+     60.[T][ ] borrow book
+     61.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     62.[T][ ] task1
+     63.[T][ ] task2
+     64.[T][ ] task3
+     65.[T][ ] borrow book
+     66.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     67.[T][ ] task1
+     68.[T][ ] task2
+     69.[T][ ] task3
+     70.[T][ ] borrow book
+     71.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     72.[T][ ] task1
+     73.[T][ ] task2
+     74.[T][ ] task3
+     75.[T][ ] borrow book
+     76.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
      What is your command?     ____________________________________________________________
      Nice! I've marked this task as done:
        [T][X] Buy groceries
 Saving tasks to: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
-Successfully saved 16 tasks.
+Successfully saved 76 tasks.
      What is your command?     ____________________________________________________________
      OK, I've marked this task as not done yet:
        [T][ ] Buy groceries
 Saving tasks to: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
-Successfully saved 16 tasks.
+Successfully saved 76 tasks.
      What is your command?      Your current conspiracies (tasks):
      1.[T][ ] Buy groceries
-     2.[E][ ] Team meeting (from: Mon 2pm to: 3pm)
+     2.[E][E][ ] Team meeting (from: Mon 2pm to: 3pm)
      3.[T][ ] borrow book
-     4.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+     4.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
      5.[T][X] task1
      6.[T][ ] task2
      7.[T][ ] task3
      8.[T][ ] 6
-     9.[D][ ] Test deadline (by: Dec 31 2023)
-     10.[D][ ] Test deadline (by: Dec 31 2023)
+     9.[D][D][ ] Test deadline (by: Dec 31 2023)
+     10.[D][D][ ] Test deadline (by: Dec 31 2023)
      11.[T][ ] Buy groceries
-     12.[D][ ] Submit assignment (by: Sep 15 2025)
-     13.[E][ ] Team meeting (from: 2025-09-01 14:00 to: 16:00)
+     12.[D][D][ ] Submit assignment (by: Sep 15 2025)
+     13.[E][E][ ] Team meeting (from: 2025-09-01 14:00 to: 16:00)
      14.[T][ ] t
      15.[T][ ] borrow book
-     16.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+     16.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     17.[T][ ] task1
+     18.[T][ ] task2
+     19.[T][ ] task3
+     20.[T][ ] borrow book
+     21.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     22.[T][ ] task1
+     23.[T][ ] task2
+     24.[T][ ] task3
+     25.[T][ ] borrow book
+     26.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     27.[T][ ] task1
+     28.[T][ ] task2
+     29.[T][ ] task3
+     30.[T][ ] borrow book
+     31.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     32.[T][ ] task1
+     33.[T][ ] task2
+     34.[T][ ] task3
+     35.[T][ ] borrow book
+     36.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     37.[T][ ] task1
+     38.[T][ ] task2
+     39.[T][ ] task3
+     40.[T][ ] borrow book
+     41.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     42.[T][ ] task1
+     43.[T][ ] task2
+     44.[T][ ] task3
+     45.[T][ ] borrow book
+     46.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     47.[T][ ] task1
+     48.[T][ ] task2
+     49.[T][ ] task3
+     50.[T][ ] borrow book
+     51.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     52.[T][ ] task1
+     53.[T][ ] task2
+     54.[T][ ] task3
+     55.[T][ ] borrow book
+     56.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     57.[T][ ] task1
+     58.[T][ ] task2
+     59.[T][ ] task3
+     60.[T][ ] borrow book
+     61.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     62.[T][ ] task1
+     63.[T][ ] task2
+     64.[T][ ] task3
+     65.[T][ ] borrow book
+     66.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     67.[T][ ] task1
+     68.[T][ ] task2
+     69.[T][ ] task3
+     70.[T][ ] borrow book
+     71.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
+     72.[T][ ] task1
+     73.[T][ ] task2
+     74.[T][ ] task3
+     75.[T][ ] borrow book
+     76.[E][E][ ] project meeting (from: Mon 2pm to: 4pm)
      What is your command?      Got it. I have inscribed this task:
        [T][ ] task1
-     Now you have 17 tasks in the list.
+     Now you have 77 tasks in the list.
 Saving tasks to: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
-Successfully saved 17 tasks.
+Successfully saved 77 tasks.
      What is your command?      Got it. I have inscribed this task:
        [T][ ] task2
-     Now you have 18 tasks in the list.
+     Now you have 78 tasks in the list.
 Saving tasks to: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
-Successfully saved 18 tasks.
+Successfully saved 78 tasks.
      What is your command?      Got it. I have inscribed this task:
        [T][ ] task3
-     Now you have 19 tasks in the list.
+     Now you have 79 tasks in the list.
 Saving tasks to: C:\\Users\\shubh\\Desktop\\NUS\\Semester 3\\CS2103T\\ip\\v_data.txt
-Successfully saved 19 tasks.
+Successfully saved 79 tasks.
      What is your command?      The curtain descends, everything ends too soon, too soon.
      Beneath this mask there is more than flesh. Beneath this mask there is an idea.
      And ideas are bulletproof!

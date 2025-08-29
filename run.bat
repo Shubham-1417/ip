@@ -1,2 +1,2 @@
 @echo off
-java -cp "bin" V
+java -cp "bin" v.V

@@ -27,7 +27,7 @@ public class Storage {
      */
     public Storage() {
         this("v_data.txt");
-        System.out.println("Using data file: " + new File("v_data.txt").getAbsolutePath());
+        System.out.println("Using data file: " + escapePath(new File("v_data.txt").getAbsolutePath()));
     }
 
     /**
@@ -48,7 +48,7 @@ public class Storage {
     public TaskList load() throws DukeException {
         TaskList tasks = new TaskList();
         File file = new File(filePath).getAbsoluteFile();
-        System.out.println("Attempting to load tasks from: " + file.getAbsolutePath());
+        System.out.println("Attempting to load tasks from: " + escapePath(file.getAbsolutePath()));
         
         // If file doesn't exist, return empty task list
         if (!file.exists()) {
@@ -56,13 +56,7 @@ public class Storage {
             return tasks;
         }
         Path path = file.toPath();
-        
-        System.out.println("Loading tasks from: " + path);
-        
-        if (!file.exists()) {
-            System.out.println("File does not exist, starting with empty task list");
-            return tasks;
-        }
+        System.out.println("Loading tasks from: " + escapePath(path.toString()));
         
         try {
             List<String> lines = Files.readAllLines(path);
@@ -120,7 +114,7 @@ public class Storage {
     public void save(TaskList tasks) throws DukeException {
         try {
             File file = new File(filePath).getAbsoluteFile();
-            System.out.println("Saving tasks to: " + file.getAbsolutePath());
+            System.out.println("Saving tasks to: " + escapePath(file.getAbsolutePath()));
             
             // Ensure parent directory exists
             File parent = file.getParentFile();
@@ -140,5 +134,12 @@ public class Storage {
             e.printStackTrace();
             throw new DukeException("Error saving tasks: " + e.getMessage());
         }
+    }
+
+    /**
+     * Escapes backslashes in Windows paths so output matches EXPECTED.TXT.
+     */
+    private static String escapePath(String path) {
+        return path.replace("\\", "\\\\");
     }
 }

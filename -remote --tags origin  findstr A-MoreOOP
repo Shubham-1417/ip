@@ -1,0 +1,9 @@
+*   [33m915ea94[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;33mtag: [m[1;33mA-MoreOOP[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge branch 'branch-A-MoreOOP'
+[31m|[m[32m\[m  
+[31m|[m * [33m6a5f356[m[33m ([m[1;31morigin/branch-A-MoreOOP[m[33m, [m[1;32mbranch-A-MoreOOP[m[33m)[m Refactor code to use more OOP principles
+[31m|[m * [33m78069b8[m Refactor code to use more OOP principles
+[31m|[m[31m/[m  
+*   [33me50f758[m[33m ([m[1;33mtag: [m[1;33mLevel-8[m[33m)[m Merge branch 'branch-Level-8'
+[33m|[m[34m\[m  
+[33m|[m * [33mb76dded[m[33m ([m[1;32mbranch-Level-8[m[33m)[m Level-8: Use LocalDate for deadlines
+[33m|[m[33m/[m  

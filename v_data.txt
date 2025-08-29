@@ -62,3 +62,23 @@ E | 0 | project meeting | Mon 2pm | 4pm
 T | 0 | task1
 T | 0 | task2
 T | 0 | task3
+T | 0 | borrow book
+E | 0 | project meeting | Mon 2pm | 4pm
+T | 0 | task1
+T | 0 | task2
+T | 0 | task3
+T | 0 | borrow book
+E | 0 | project meeting | Mon 2pm | 4pm
+T | 0 | task1
+T | 0 | task2
+T | 0 | task3
+T | 0 | borrow book
+E | 0 | project meeting | Mon 2pm | 4pm
+T | 0 | task1
+T | 0 | task2
+T | 0 | task3
+T | 0 | borrow book
+E | 0 | project meeting | Mon 2pm | 4pm
+T | 0 | task1
+T | 0 | task2
+T | 0 | task3
