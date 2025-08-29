@@ -20,10 +20,11 @@ public class Parser {
     private static final String COMMAND_DELETE = "delete";
 
     // Error messages
-    private static final String ERROR_INVALID_COMMAND = "I'm sorry, but I don't know what that means :-(";
+    private static final String ERROR_INVALID_COMMAND = "A curious utterance. I do not recognize it. Try: todo, deadline, event, list, mark, unmark, bye";
     private static final String ERROR_EMPTY_DESCRIPTION = "The description cannot be empty.";
     private static final String ERROR_INVALID_TASK_NUMBER = "Please provide a valid task number.";
     private static final String ERROR_INVALID_DATE_FORMAT = "Please use the format: yyyy-MM-dd for dates.";
+    private static final String EMPTY_INPUT = "Even silence speaks volumes. But I need words to understand you.";
 
     /**
      * Parses the user input and returns the corresponding command.
@@ -33,6 +34,9 @@ public class Parser {
      * @throws DukeException If the input is invalid
      */
     public static Command parse(String input) throws DukeException {
+        if (input.trim().isEmpty()) {
+            throw new DukeException(EMPTY_INPUT);
+        }
         String[] parts = input.split(" ", 2);
         String command = parts[0].toLowerCase();
         String arguments = parts.length > 1 ? parts[1].trim() : "";
@@ -87,7 +91,7 @@ public class Parser {
 
     private static AddTodoCommand parseTodoCommand(String arguments) throws DukeException {
         if (arguments.isEmpty()) {
-            throw new DukeException("The description of a todo cannot be empty.");
+            throw new DukeException("Even ideas need words. The description of a todo cannot be empty.");
         }
         return new AddTodoCommand(arguments);
     }
@@ -95,14 +99,14 @@ public class Parser {
     private static AddDeadlineCommand parseDeadlineCommand(String arguments) throws DukeException {
         String[] parts = arguments.split("\\s+/by\\s+", 2);
         if (parts.length < 2) {
-            throw new DukeException("Please use the format: deadline <description> /by <yyyy-MM-dd>");
+            throw new DukeException("A deadline demands a /by. Example: deadline return book /by Sunday");
         }
         
         String description = parts[0].trim();
         String by = parts[1].trim();
         
         if (description.isEmpty()) {
-            throw new DukeException("The description of a deadline cannot be empty.");
+            throw new DukeException("Give it both flesh and hour: description and /by must not be empty.");
         }
         
         try {
@@ -116,7 +120,7 @@ public class Parser {
     private static AddEventCommand parseEventCommand(String arguments) throws DukeException {
         String[] parts = arguments.split("\\s+/from\\s+", 2);
         if (parts.length < 2) {
-            throw new DukeException("Please use the format: event <description> /from <time> /to <time>");
+            throw new DukeException("An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm");
         }
         
         String description = parts[0].trim();
@@ -130,7 +134,7 @@ public class Parser {
         String to = timeParts[1].trim();
         
         if (description.isEmpty()) {
-            throw new DukeException("The description of an event cannot be empty.");
+            throw new DukeException("An event requires a description, start time, and end time.");
         }
         
         return new AddEventCommand(description, from, to);

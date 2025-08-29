@@ -63,3 +63,6 @@ T | 0 | task1
 T | 0 | task2
 T | 0 | task3
 T | 0 | boss
+T | 0 | g
+T | 0 | 6
+D | 0 | NWO | 2030-01-01

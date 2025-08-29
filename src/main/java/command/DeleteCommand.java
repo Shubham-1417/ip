@@ -26,12 +26,12 @@ public class DeleteCommand extends Command {
         try {
             Task removedTask = tasks.remove(index);
             ui.showLine();
-            System.out.println("     Noted. I've removed this task:");
+            System.out.println("     Very well. I've removed this task from the records:");
             System.out.println("       " + removedTask);
-            System.out.println("     Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println("     Now you have " + tasks.size() + " task" + (tasks.size() != 1 ? "s" : "") + " in the list.");
             storage.save(tasks);
         } catch (IndexOutOfBoundsException e) {
-            ui.showError("That task doesn't exist. Use 'list' to see all tasks.");
+            ui.showError("No such task exists. The number must be between 1 and " + tasks.size());
         } catch (DukeException e) {
             ui.showError(e.getMessage());
         }

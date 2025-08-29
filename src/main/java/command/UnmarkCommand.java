@@ -26,7 +26,7 @@ public class UnmarkCommand extends Command {
         try {
             Task task = tasks.unmarkAsDone(index);
             ui.showLine();
-            System.out.println("     OK, I've marked this task as not done yet:");
+            System.out.println("     Undone, for now. Marked as not done:");
             System.out.println("       " + task);
             storage.save(tasks);
         } catch (DukeException e) {
