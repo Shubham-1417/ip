@@ -3,8 +3,7 @@ package storage;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.io.File;
-import java.util.List;
-import task.Task;
+import task.TaskList;
 import task.Todo;
 import task.DukeException;
 
@@ -17,10 +16,9 @@ public class StorageTest {
         
         try {
             // Create test tasks
-            List<Task> tasksToSave = List.of(
-                new Todo("Test todo 1"),
-                new Todo("Test todo 2")
-            );
+            TaskList tasksToSave = new TaskList();
+            tasksToSave.add(new Todo("Test todo 1"));
+            tasksToSave.add(new Todo("Test todo 2"));
             
             // Save tasks
             storage.save(tasksToSave);
@@ -30,7 +28,7 @@ public class StorageTest {
             assertTrue(file.exists(), "File should be created after save");
             
             // Load tasks
-            List<Task> loadedTasks = storage.load();
+            TaskList loadedTasks = storage.load();
             
             // Verify loaded tasks
             assertEquals(2, loadedTasks.size(), "Should load 2 tasks");
