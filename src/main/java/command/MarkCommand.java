@@ -26,7 +26,7 @@ public class MarkCommand extends Command {
         try {
             Task task = tasks.markAsDone(index);
             ui.showLine();
-            System.out.println("     Nice! I've marked this task as done:");
+            System.out.println("     A tick for triumph. Marked as done:");
             System.out.println("       " + task);
             storage.save(tasks);
         } catch (DukeException e) {

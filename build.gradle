@@ -8,8 +8,9 @@ repositories {
 }
 
 dependencies {
-    // JUnit 5 support – useful for A-JUnit increment later
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    // JUnit 5
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
+    testRuntimeOnly  group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
 }
 
 application {
@@ -37,4 +38,13 @@ tasks.withType(JavaCompile).configureEach {
 
 test {
     useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+        showStandardStreams = false
+    }
 }
