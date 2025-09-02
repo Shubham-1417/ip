@@ -22,6 +22,12 @@ public class Todo extends Task {
     }
     
     @Override
+    /**
+     * Returns the serialized representation of this todo for persistence.
+     * Format: {@code T | <done:1|0> | <description>}.
+     *
+     * @return save-friendly string for this todo
+     */
     public String toSaveString() {
         return "T | " + (isDone() ? "1" : "0") + " | " + getDescription();
     }

@@ -44,6 +44,12 @@ public class Event extends Task {
     }
     
     @Override
+    /**
+     * Returns the serialized representation of this event for persistence.
+     * Format: {@code E | <done:1|0> | <description> | <from> | <to>}.
+     *
+     * @return save-friendly string for this event
+     */
     public String toSaveString() {
         return "E | " + (isDone() ? "1" : "0") + " | " + getDescription() + " | " + from + " | " + to;
     }

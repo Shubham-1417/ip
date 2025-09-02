@@ -26,6 +26,15 @@ public class AddDeadlineCommand extends Command {
         this.by = by;
     }
 
+    /**
+     * Executes this command by creating a new {@code Deadline} and adding it to the list,
+     * then persisting the updated list.
+     *
+     * @param tasks   the task list to update
+     * @param ui      the UI to display feedback
+     * @param storage the storage used to persist changes
+     * @return false to continue running the program
+     */
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) {
         try {

@@ -44,6 +44,12 @@ public class Deadline extends Task {
     }
     
     @Override
+    /**
+     * Returns the serialized representation of this deadline for persistence.
+     * Format: {@code D | <done:1|0> | <description> | <yyyy-MM-dd>}.
+     *
+     * @return save-friendly string for this deadline
+     */
     public String toSaveString() {
         return "D | " + (isDone() ? "1" : "0") + " | " + getDescription() + " | " + by.toString();
     }
