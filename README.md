@@ -24,3 +24,21 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
    ```
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+## Run (JAR)
+1. Download `v-all.jar` from the Releases page.
+2. Put it in an empty folder.
+3. Open a terminal in that folder.
+4. Run:
+   ```bash
+   java -jar "v-all.jar"
+   ```
+
+## Build (optional)
+To build the runnable JAR yourself:
+```bash
+./gradlew clean shadowJar      # on macOS/Linux
+# or
+.\\gradlew clean shadowJar      # on Windows
+```
+The JAR will be at `build\\libs\\v-all.jar`.

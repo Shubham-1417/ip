@@ -18,6 +18,7 @@ public class Parser {
     private static final String COMMAND_DEADLINE = "deadline";
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_FIND = "find";
 
     // Error messages
     private static final String ERROR_INVALID_COMMAND = "A curious utterance. I do not recognize it. Try: todo, deadline, event, list, mark, unmark, bye";
@@ -65,6 +66,9 @@ public class Parser {
                 
             case COMMAND_DELETE:
                 return parseDeleteCommand(arguments);
+            
+            case COMMAND_FIND:
+                return parseFindCommand(arguments);
                 
             default:
                 throw new DukeException(ERROR_INVALID_COMMAND);
@@ -147,5 +151,13 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new DukeException(ERROR_INVALID_TASK_NUMBER);
         }
+    }
+
+    private static FindCommand parseFindCommand(String arguments) throws DukeException {
+        String rest = arguments.trim();
+        if (rest.isEmpty()) {
+            throw new DukeException("Words are the bullets of ideas—give me something to find.");
+        }
+        return new FindCommand(rest);
     }
 }

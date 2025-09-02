@@ -2,6 +2,7 @@ package ui;
 
 import task.Task;
 import task.TaskList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -148,6 +149,24 @@ public class Ui {
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println("     " + (i + 1) + "." + tasks.get(i));
         }
+    }
+
+    /**
+     * Shows the results of a find query.
+     *
+     * @param matches list of matching tasks
+     */
+    public void showFindResults(List<Task> matches) {
+        showLine();
+        if (matches.isEmpty()) {
+            System.out.println("     No matches. Even the shadows are silent.");
+        } else {
+            System.out.println("     Here are the matching tasks in your list:");
+            for (int i = 0; i < matches.size(); i++) {
+                System.out.println("     " + (i + 1) + "." + matches.get(i));
+            }
+        }
+        showLine();
     }
 
     /**
