@@ -1,5 +1,8 @@
 package v.parser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import v.command.AddDeadlineCommand;
 import v.command.AddEventCommand;
 import v.command.AddTodoCommand;
@@ -11,9 +14,6 @@ import v.command.ListCommand;
 import v.command.MarkCommand;
 import v.command.UnmarkCommand;
 import v.task.DukeException;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 /**
  * Parses user input into commands for the application.
@@ -31,7 +31,8 @@ public class Parser {
     private static final String COMMAND_FIND = "find";
 
     // Error messages
-    private static final String ERROR_INVALID_COMMAND = "A curious utterance. I do not recognize it. Try: todo, deadline, event, list, mark, unmark, bye";
+    private static final String ERROR_INVALID_COMMAND = "A curious utterance. I do not recognize it. "
+            + "Try: todo, deadline, event, list, mark, unmark, bye";
     private static final String ERROR_EMPTY_DESCRIPTION = "The description cannot be empty.";
     private static final String ERROR_INVALID_TASK_NUMBER = "Please provide a valid task number.";
     private static final String ERROR_INVALID_DATE_FORMAT = "Please use the format: yyyy-MM-dd for dates.";
@@ -96,7 +97,7 @@ public class Parser {
 
     private static AddTodoCommand parseTodoCommand(String arguments) throws DukeException {
         if (arguments.isEmpty()) {
-            throw new DukeException("Even ideas need words. The description of a todo cannot be empty.");
+            throw new DukeException("The description of a todo cannot be empty.");
         }
         return new AddTodoCommand(arguments);
     }
@@ -104,14 +105,14 @@ public class Parser {
     private static AddDeadlineCommand parseDeadlineCommand(String arguments) throws DukeException {
         String[] parts = arguments.split("\\s+/by\\s+", 2);
         if (parts.length < 2) {
-            throw new DukeException("A deadline demands a /by. Example: deadline return book /by Sunday");
+            throw new DukeException("A deadline requires a /by. Example: deadline return book /by Sunday");
         }
 
         String description = parts[0].trim();
         String by = parts[1].trim();
 
         if (description.isEmpty()) {
-            throw new DukeException("Give it both flesh and hour: description and /by must not be empty.");
+            throw new DukeException("Description and /by must not be empty.");
         }
 
         try {
@@ -157,7 +158,7 @@ public class Parser {
     private static FindCommand parseFindCommand(String arguments) throws DukeException {
         String rest = arguments.trim();
         if (rest.isEmpty()) {
-            throw new DukeException("Words are the bullets of ideas—give me something to find.");
+            throw new DukeException("Please provide a keyword to search for.");
         }
         return new FindCommand(rest);
     }

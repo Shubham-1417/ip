@@ -1,10 +1,10 @@
 package v.command;
 
-import v.task.TaskList;
-import v.task.Task;
-import v.task.DukeException;
-import v.ui.Ui;
 import v.storage.Storage;
+import v.task.DukeException;
+import v.task.Task;
+import v.task.TaskList;
+import v.ui.Ui;
 
 /**
  * Command to delete a task.
@@ -37,7 +37,8 @@ public class DeleteCommand extends Command {
             ui.showLine();
             System.out.println("     Very well. I've removed this task from the records:");
             System.out.println("       " + removedTask);
-            System.out.println("     Now you have " + tasks.size() + " task" + (tasks.size() != 1 ? "s" : "") + " in the list.");
+            System.out.println("     Now you have " + tasks.size() + " task"
+                    + (tasks.size() != 1 ? "s" : "") + " in the list.");
             storage.save(tasks);
         } catch (IndexOutOfBoundsException e) {
             ui.showError("No such task exists. The number must be between 1 and " + tasks.size());

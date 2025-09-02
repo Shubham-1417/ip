@@ -1,10 +1,10 @@
 package v.command;
 
+import v.storage.Storage;
+import v.task.DukeException;
+import v.task.Task;
 import v.task.TaskList;
 import v.ui.Ui;
-import v.storage.Storage;
-import v.task.Task;
-import v.task.DukeException;
 
 /**
  * Command to mark a task as not done.

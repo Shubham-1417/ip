@@ -1,11 +1,11 @@
 package v.command;
 
-import v.task.TaskList;
+import v.storage.Storage;
+import v.task.DukeException;
 import v.task.Event;
 import v.task.Task;
-import v.task.DukeException;
+import v.task.TaskList;
 import v.ui.Ui;
-import v.storage.Storage;
 
 /**
  * Command to add a new event task.

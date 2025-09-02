@@ -1,16 +1,17 @@
 package v.task;
 
-import v.enums.TaskType;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import v.enums.TaskType;
 
 /**
  * A task that needs to be done before a specific date/time.
  * A promise with a deadline, a race against time itself.
  */
 public class Deadline extends Task {
-    protected final LocalDate by;
     private static final DateTimeFormatter DISPLAY_FORMAT = DateTimeFormatter.ofPattern("MMM d yyyy");
+    protected final LocalDate by;
 
     /**
      * Creates a new Deadline task with description and due date.

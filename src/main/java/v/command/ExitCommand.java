@@ -1,8 +1,8 @@
 package v.command;
 
+import v.storage.Storage;
 import v.task.TaskList;
 import v.ui.Ui;
-import v.storage.Storage;
 
 /**
  * Command to exit the application.
