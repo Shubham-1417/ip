@@ -32,7 +32,9 @@ public class V {
     }
 
     /**
-     * Runs the V application.
+     * Runs the V CLI application loop.
+     * Reads commands from {@code Ui}, parses them into {@code Command}s, and executes them
+     * until an exit command is issued.
      */
     public void run() {
         ui.showWelcome();
@@ -50,6 +52,12 @@ public class V {
         }
     }
 
+    /**
+     * Main entry point of the V CLI application.
+     * Orchestrates parsing, execution, and persistence of tasks.
+     *
+     * @param args command-line arguments (unused)
+     */
     public static void main(String[] args) {
         new V().run();
     }

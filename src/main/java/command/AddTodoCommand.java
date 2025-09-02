@@ -22,6 +22,15 @@ public class AddTodoCommand extends Command {
         this.description = description;
     }
 
+    /**
+     * Executes this command by creating a new {@code Todo} and adding it to the list.
+     * Also persists the updated task list using {@code Storage}.
+     *
+     * @param tasks   the task list to mutate
+     * @param ui      the UI to display messages
+     * @param storage the storage to persist changes
+     * @return false to indicate the application should continue running
+     */
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) {
         try {

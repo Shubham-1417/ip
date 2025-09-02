@@ -21,6 +21,15 @@ public class DeleteCommand extends Command {
         this.index = index;
     }
 
+    /**
+     * Executes this command by removing the task at the given index,
+     * displaying feedback, and persisting the updated list.
+     *
+     * @param tasks   the task list to update
+     * @param ui      the UI to display feedback
+     * @param storage the storage used to persist changes
+     * @return false to continue running the program
+     */
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) {
         try {

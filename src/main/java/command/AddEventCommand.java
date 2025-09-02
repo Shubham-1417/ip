@@ -28,6 +28,15 @@ public class AddEventCommand extends Command {
         this.to = to;
     }
 
+    /**
+     * Executes this command by creating a new {@code Event} and adding it to the list,
+     * then persisting the updated task list.
+     *
+     * @param tasks   the list to update
+     * @param ui      the UI to display feedback
+     * @param storage the storage used to persist changes
+     * @return false to continue running the program
+     */
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) {
         try {

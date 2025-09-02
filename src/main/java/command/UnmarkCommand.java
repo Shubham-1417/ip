@@ -21,6 +21,15 @@ public class UnmarkCommand extends Command {
         this.index = index;
     }
 
+    /**
+     * Executes this command by marking the task at the given index as not done,
+     * displaying feedback, and persisting the updated list.
+     *
+     * @param tasks   the task list containing the target task
+     * @param ui      the UI to display feedback to the user
+     * @param storage the storage used to persist the updated task list
+     * @return false to continue running the program
+     */
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) {
         try {
