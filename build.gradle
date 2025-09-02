@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'checkstyle'
 }
 
 repositories {
@@ -33,6 +34,19 @@ java {
         // lock to Java 17 as required by CS2103T
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+checkstyle {
+    toolVersion = '10.12.4'
+    // Use local config directory if present (we provide one under config/checkstyle)
+    configDirectory = file('config/checkstyle')
+}
+
+tasks.withType(Checkstyle).configureEach {
+    // Show violations in the console
+    showViolations = true
+    // Fail the build on violations when running check task
+    ignoreFailures = false
 }
 
 tasks.withType(JavaCompile).configureEach {

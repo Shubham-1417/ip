@@ -1,9 +1,12 @@
 package v.parser;
 
 import org.junit.jupiter.api.Test;
-import command.*;
-import parser.Parser;
-import task.DukeException;
+import v.command.AddDeadlineCommand;
+import v.command.AddEventCommand;
+import v.command.AddTodoCommand;
+import v.command.MarkCommand;
+import v.parser.Parser;
+import v.task.DukeException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
