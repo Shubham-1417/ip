@@ -1,0 +1,164 @@
+package v.parser;
+
+import v.command.AddDeadlineCommand;
+import v.command.AddEventCommand;
+import v.command.AddTodoCommand;
+import v.command.Command;
+import v.command.DeleteCommand;
+import v.command.ExitCommand;
+import v.command.FindCommand;
+import v.command.ListCommand;
+import v.command.MarkCommand;
+import v.command.UnmarkCommand;
+import v.task.DukeException;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
+/**
+ * Parses user input into commands for the application.
+ */
+public class Parser {
+    // Command constants
+    private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_BYE = "bye";
+    private static final String COMMAND_MARK = "mark";
+    private static final String COMMAND_UNMARK = "unmark";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_FIND = "find";
+
+    // Error messages
+    private static final String ERROR_INVALID_COMMAND = "A curious utterance. I do not recognize it. Try: todo, deadline, event, list, mark, unmark, bye";
+    private static final String ERROR_EMPTY_DESCRIPTION = "The description cannot be empty.";
+    private static final String ERROR_INVALID_TASK_NUMBER = "Please provide a valid task number.";
+    private static final String ERROR_INVALID_DATE_FORMAT = "Please use the format: yyyy-MM-dd for dates.";
+    private static final String EMPTY_INPUT = "Even silence speaks volumes. But I need words to understand you.";
+
+    /**
+     * Parses the user input and returns the corresponding command.
+     *
+     * @param input The user input.
+     * @return The parsed command.
+     * @throws DukeException If the input is invalid.
+     */
+    public static Command parse(String input) throws DukeException {
+        if (input.trim().isEmpty()) {
+            throw new DukeException(EMPTY_INPUT);
+        }
+        String[] parts = input.split(" ", 2);
+        String command = parts[0].toLowerCase();
+        String arguments = parts.length > 1 ? parts[1].trim() : "";
+
+        switch (command) {
+        case COMMAND_LIST:
+            return new ListCommand();
+        case COMMAND_BYE:
+            return new ExitCommand();
+        case COMMAND_MARK:
+            return parseMarkCommand(arguments);
+        case COMMAND_UNMARK:
+            return parseUnmarkCommand(arguments);
+        case COMMAND_TODO:
+            return parseTodoCommand(arguments);
+        case COMMAND_DEADLINE:
+            return parseDeadlineCommand(arguments);
+        case COMMAND_EVENT:
+            return parseEventCommand(arguments);
+        case COMMAND_DELETE:
+            return parseDeleteCommand(arguments);
+        case COMMAND_FIND:
+            return parseFindCommand(arguments);
+        default:
+            throw new DukeException(ERROR_INVALID_COMMAND);
+        }
+    }
+
+    private static MarkCommand parseMarkCommand(String arguments) throws DukeException {
+        try {
+            int index = Integer.parseInt(arguments) - 1;
+            return new MarkCommand(index);
+        } catch (NumberFormatException e) {
+            throw new DukeException(ERROR_INVALID_TASK_NUMBER);
+        }
+    }
+
+    private static UnmarkCommand parseUnmarkCommand(String arguments) throws DukeException {
+        try {
+            int index = Integer.parseInt(arguments) - 1;
+            return new UnmarkCommand(index);
+        } catch (NumberFormatException e) {
+            throw new DukeException(ERROR_INVALID_TASK_NUMBER);
+        }
+    }
+
+    private static AddTodoCommand parseTodoCommand(String arguments) throws DukeException {
+        if (arguments.isEmpty()) {
+            throw new DukeException("Even ideas need words. The description of a todo cannot be empty.");
+        }
+        return new AddTodoCommand(arguments);
+    }
+
+    private static AddDeadlineCommand parseDeadlineCommand(String arguments) throws DukeException {
+        String[] parts = arguments.split("\\s+/by\\s+", 2);
+        if (parts.length < 2) {
+            throw new DukeException("A deadline demands a /by. Example: deadline return book /by Sunday");
+        }
+
+        String description = parts[0].trim();
+        String by = parts[1].trim();
+
+        if (description.isEmpty()) {
+            throw new DukeException("Give it both flesh and hour: description and /by must not be empty.");
+        }
+
+        try {
+            LocalDate date = LocalDate.parse(by);
+            return new AddDeadlineCommand(description, date);
+        } catch (DateTimeParseException e) {
+            throw new DukeException(ERROR_INVALID_DATE_FORMAT);
+        }
+    }
+
+    private static AddEventCommand parseEventCommand(String arguments) throws DukeException {
+        String[] parts = arguments.split("\\s+/from\\s+", 2);
+        if (parts.length < 2) {
+            throw new DukeException("An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm");
+        }
+
+        String description = parts[0].trim();
+        String[] timeParts = parts[1].split("\\s+/to\\s+", 2);
+
+        if (timeParts.length < 2) {
+            throw new DukeException("Please specify both start and end times using /from and /to");
+        }
+
+        String from = timeParts[0].trim();
+        String to = timeParts[1].trim();
+
+        if (description.isEmpty()) {
+            throw new DukeException("An event requires a description, start time, and end time.");
+        }
+
+        return new AddEventCommand(description, from, to);
+    }
+
+    private static DeleteCommand parseDeleteCommand(String arguments) throws DukeException {
+        try {
+            int index = Integer.parseInt(arguments) - 1;
+            return new DeleteCommand(index);
+        } catch (NumberFormatException e) {
+            throw new DukeException(ERROR_INVALID_TASK_NUMBER);
+        }
+    }
+
+    private static FindCommand parseFindCommand(String arguments) throws DukeException {
+        String rest = arguments.trim();
+        if (rest.isEmpty()) {
+            throw new DukeException("Words are the bullets of ideas—give me something to find.");
+        }
+        return new FindCommand(rest);
+    }
+}

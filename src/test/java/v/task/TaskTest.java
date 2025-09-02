@@ -1,7 +1,7 @@
 package v.task;
 
 import org.junit.jupiter.api.Test;
-import task.Todo;
+import v.task.Todo;
 
 import static org.junit.jupiter.api.Assertions.*;
 

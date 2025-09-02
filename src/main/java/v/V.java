@@ -1,11 +1,11 @@
 package v;
 
-import command.Command;
-import parser.Parser;
-import storage.Storage;
-import task.TaskList;
-import task.DukeException;
-import ui.Ui;
+import v.command.Command;
+import v.parser.Parser;
+import v.storage.Storage;
+import v.task.TaskList;
+import v.task.DukeException;
+import v.ui.Ui;
 
 /**
  * V - A personal assistant with a theatrical flair, inspired by V for Vendetta.
@@ -24,7 +24,7 @@ public class V {
         this.ui = new Ui();
         this.storage = new Storage();
         this.parser = new Parser();
-        
+
         try {
             this.tasks = storage.load();
         } catch (DukeException e) {
@@ -34,12 +34,14 @@ public class V {
     }
 
     /**
-     * Runs the V application.
+     * Runs the V CLI application loop.
+     * Reads commands from {@code Ui}, parses them into {@code Command}s, and executes them
+     * until an exit command is issued.
      */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
-        
+
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
@@ -52,6 +54,12 @@ public class V {
         }
     }
 
+    /**
+     * Main entry point of the V CLI application.
+     * Orchestrates parsing, execution, and persistence of tasks.
+     *
+     * @param args Command-line arguments (unused).
+     */
     public static void main(String[] args) {
         new V().run();
     }
