@@ -1,12 +1,18 @@
 package v.storage;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import v.task.DukeException;
 import v.task.TaskList;
 import v.task.Todo;
-import v.task.DukeException;
 
+/**
+ * Test class for Storage functionality.
+ */
 public class StorageTest {
     @Test
     public void testSaveAndLoad() throws DukeException {

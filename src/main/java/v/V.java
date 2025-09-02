@@ -3,8 +3,8 @@ package v;
 import v.command.Command;
 import v.parser.Parser;
 import v.storage.Storage;
-import v.task.TaskList;
 import v.task.DukeException;
+import v.task.TaskList;
 import v.ui.Ui;
 
 /**

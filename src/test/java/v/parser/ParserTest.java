@@ -1,15 +1,20 @@
 package v.parser;
 
+//CHECKSTYLE.OFF: CustomImportOrder
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+
 import v.command.AddDeadlineCommand;
 import v.command.AddEventCommand;
 import v.command.AddTodoCommand;
 import v.command.MarkCommand;
-import v.parser.Parser;
 import v.task.DukeException;
+//CHECKSTYLE.ON: CustomImportOrder
 
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Test class for Parser functionality.
+ */
 public class ParserTest {
 
     @Test

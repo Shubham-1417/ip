@@ -1,10 +1,14 @@
 package v.task;
 
+//CHECKSTYLE.OFF: CustomImportOrder
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import v.task.Todo;
+//CHECKSTYLE.ON: CustomImportOrder
 
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Test class for Task functionality.
+ */
 public class TaskTest {
 
     @Test

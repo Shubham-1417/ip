@@ -1,15 +1,17 @@
 package v.ui;
 
-import v.task.Task;
-import v.task.TaskList;
 import java.util.List;
 import java.util.Scanner;
+
+import v.task.Task;
+import v.task.TaskList;
 
 /**
  * Handles all user interface interactions.
  */
 public class Ui {
     private static final String HORIZONTAL_LINE = "    ____________________________________________________________";
+    //CHECKSTYLE.OFF: Indentation
     private static final String LOGO =
     "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%##*#%##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n"
     + "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@%@@@@*%#%%@@%%%%%%%%%%%%%%%%%%%%%%%%\n"
@@ -82,6 +84,7 @@ public class Ui {
     + "@@@@@@@@@@@@@@@@@@@@##%%%%%%%@@%%%%@@@@@@@%@@@@@@+@@@%%%%%######@@@@@@@@@@@@@@@@@\n"
     + "@@@@@@@@@@@@@@@@@@%%##*####%%%%%%%%%%@@@@%@@@@@@+@@@@%%######%@@@@@@@@@@@@@@@@@@\n"
     + "@@@@@@@@@@@@@@@@@@@@#########%%%%%@@@@@@@@@@%%@@*@@@%######@@@@@@@@@@@@@@@@@@@@@\n";
+    //CHECKSTYLE.ON: Indentation
     private final Scanner scanner;
 
     /**
