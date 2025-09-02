@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 repositories {
@@ -17,6 +18,8 @@ application {
     // 👇 set to your real entry point
     mainClass = 'v.V'
 }
+
+archivesBaseName = 'v'
 
 tasks.named('run') {
     // Let the app read from the console when running via `gradlew run`
