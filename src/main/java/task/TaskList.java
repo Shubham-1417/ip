@@ -119,4 +119,17 @@ public class TaskList {
     public boolean isEmpty() {
         return tasks.isEmpty();
     }
+
+    /**
+     * Finds tasks whose descriptions contain the given keyword (case-insensitive).
+     *
+     * @param keyword Keyword to search for
+     * @return a new list containing matching tasks
+     */
+    public List<Task> find(String keyword) {
+        String k = keyword.toLowerCase();
+        return tasks.stream()
+                .filter(t -> t.getDescription().toLowerCase().contains(k))
+                .toList();
+    }
 }

@@ -14,6 +14,9 @@ if not exist "%BIN_DIR%" mkdir "%BIN_DIR%"
 REM Delete previous ACTUAL.TXT if it exists
 if exist "text-ui-test\ACTUAL.TXT" del "text-ui-test\ACTUAL.TXT"
 
+REM Ensure test starts with a clean data file
+if exist "v_data.txt" del "v_data.txt"
+
 echo Compiling...
 cd /d "%SRC_DIR%"
 javac -Xlint:none -d "..\..\..\bin" -cp "." *.java command\*.java parser\*.java storage\*.java task\*.java ui\*.java
