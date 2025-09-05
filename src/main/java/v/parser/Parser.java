@@ -97,7 +97,7 @@ public class Parser {
 
     private static AddTodoCommand parseTodoCommand(String arguments) throws DukeException {
         if (arguments.isEmpty()) {
-            throw new DukeException("The description of a todo cannot be empty.");
+            throw new DukeException("Even ideas need words. The description of a todo cannot be empty.");
         }
         return new AddTodoCommand(arguments);
     }
@@ -112,7 +112,8 @@ public class Parser {
         String by = parts[1].trim();
 
         if (description.isEmpty()) {
-            throw new DukeException("Description and /by must not be empty.");
+            throw new DukeException("Time waits for no one, but words are required. "
+                    + "The description of a deadline cannot be empty.");
         }
 
         try {
@@ -140,7 +141,7 @@ public class Parser {
         String to = timeParts[1].trim();
 
         if (description.isEmpty()) {
-            throw new DukeException("An event requires a description, start time, and end time.");
+            throw new DukeException("Every revolution needs a purpose. The description of an event cannot be empty.");
         }
 
         return new AddEventCommand(description, from, to);
