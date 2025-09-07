@@ -18,6 +18,8 @@ public class MarkCommand extends Command {
      * @param index The index of the task to mark as done.
      */
     public MarkCommand(int index) {
+        // Assertion: index should be non-negative
+        assert index >= 0 : "Index should be non-negative";
         this.index = index;
     }
 
@@ -32,8 +34,15 @@ public class MarkCommand extends Command {
      */
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) {
+        // Assertion: parameters should not be null
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+        
         try {
             Task task = tasks.markAsDone(index);
+            // Assertion: task should not be null after marking
+            assert task != null : "Marked task should not be null";
             ui.showLine();
             System.out.println("     A tick for triumph. Marked as done:");
             System.out.println("       " + task);
