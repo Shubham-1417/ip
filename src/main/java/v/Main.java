@@ -22,10 +22,18 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
-            stage.setTitle("V");
+            stage.setTitle("V - Voice for the Voiceless");
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
+            
+            // Set V's Guy Fawkes mask as application icon
+            try {
+                stage.getIcons().add(new javafx.scene.image.Image(
+                    Main.class.getResourceAsStream("/images/v-mask.png")));
+            } catch (Exception e) {
+                System.err.println("Could not load application icon: " + e.getMessage());
+            }
             fxmlLoader.<MainWindow>getController().setV(v); // inject the V instance
             stage.show();
             stage.toFront(); // Bring window to front

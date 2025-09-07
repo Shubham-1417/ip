@@ -42,7 +42,12 @@ public class MainWindow extends AnchorPane {
         backgroundManager = new BackgroundManager(target);
 
         // Focus the text field on load so keyboard works immediately
-        javafx.application.Platform.runLater(() -> userInput.requestFocus());
+        // Also set up keyboard shortcuts for better user experience
+        javafx.application.Platform.runLater(() -> {
+            userInput.requestFocus();
+            // Enable Enter key to send message (already handled by onAction)
+            // Future: Could add Ctrl+L to clear chat, Ctrl+/ for help, etc.
+        });
 
         // Add V's dramatic welcome message with delays - using original CLI text
         addWelcomeMessageWithDelay("Voilà! In view, a voice of the vox populi.", 0);
