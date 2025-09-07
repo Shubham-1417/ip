@@ -149,9 +149,11 @@ public class Ui {
             return;
         }
         System.out.println("     Your current conspiracies (tasks):");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("     " + (i + 1) + "." + tasks.get(i));
-        }
+        
+        // Use streams to format task list with indices
+        java.util.stream.IntStream.range(0, tasks.size())
+                .mapToObj(i -> "     " + (i + 1) + "." + tasks.get(i))
+                .forEach(System.out::println);
     }
 
     /**
@@ -165,9 +167,11 @@ public class Ui {
             System.out.println("     No matches. Even the shadows are silent.");
         } else {
             System.out.println("     Here are the matching tasks in your list:");
-            for (int i = 0; i < matches.size(); i++) {
-                System.out.println("     " + (i + 1) + "." + matches.get(i));
-            }
+            
+            // Use streams to format search results with indices
+            java.util.stream.IntStream.range(0, matches.size())
+                    .mapToObj(i -> "     " + (i + 1) + "." + matches.get(i))
+                    .forEach(System.out::println);
         }
         showLine();
     }

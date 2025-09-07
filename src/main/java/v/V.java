@@ -52,19 +52,23 @@ public class V {
                             .append(size != 1 ? "s" : "").append(" in the revolutionary agenda.");
                 }
 
-                @Override
-                public void showTaskList(TaskList tasks) {
-                    if (tasks.isEmpty()) {
-                        response.append("The stage is set, but the script is blank. "
-                                + "Your revolutionary agenda awaits its first act.");
-                        return;
-                    }
-                    response.append("Behold, your current conspiracies against the mundane:\n\n");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        response.append("  ").append(i + 1).append(". ").append(tasks.get(i)).append("\n");
-                    }
-                    response.append("\nTotal acts of rebellion: ").append(tasks.size()).append(" task(s).");
+            @Override
+            public void showTaskList(TaskList tasks) {
+                if (tasks.isEmpty()) {
+                    response.append("The stage is set, but the script is blank. "
+                            + "Your revolutionary agenda awaits its first act.");
+                    return;
                 }
+                response.append("Behold, your current conspiracies against the mundane:\n\n");
+                
+                // Use streams to format task list with indices
+                String taskList = java.util.stream.IntStream.range(0, tasks.size())
+                        .mapToObj(i -> "  " + (i + 1) + ". " + tasks.get(i))
+                        .reduce("", (acc, task) -> acc + task + "\n");
+                response.append(taskList);
+                
+                response.append("\nTotal acts of rebellion: ").append(tasks.size()).append(" task(s).");
+            }
 
                 @Override
                 public void showError(String message) {
@@ -93,19 +97,23 @@ public class V {
                     response.append("Farewell. May we meet again in the shadows.");
                 }
 
-                @Override
-                public void showFindResults(java.util.List<v.task.Task> matches) {
-                    if (matches.isEmpty()) {
-                        response.append("The search yields nothing. Even the shadows are silent on this matter.");
-                    } else {
-                        response.append("Voilà! The shadows reveal these conspiracies:\n\n");
-                        for (int i = 0; i < matches.size(); i++) {
-                            response.append("  ").append(i + 1).append(". ").append(matches.get(i)).append("\n");
-                        }
-                        response.append("\nUnearthed from the depths: ").append(matches.size())
-                                .append(" matching revelation(s).");
-                    }
+            @Override
+            public void showFindResults(java.util.List<v.task.Task> matches) {
+                if (matches.isEmpty()) {
+                    response.append("The search yields nothing. Even the shadows are silent on this matter.");
+                } else {
+                    response.append("Voilà! The shadows reveal these conspiracies:\n\n");
+                    
+                    // Use streams to format search results with indices
+                    String searchResults = java.util.stream.IntStream.range(0, matches.size())
+                            .mapToObj(i -> "  " + (i + 1) + ". " + matches.get(i))
+                            .reduce("", (acc, task) -> acc + task + "\n");
+                    response.append(searchResults);
+                    
+                    response.append("\nUnearthed from the depths: ").append(matches.size())
+                            .append(" matching revelation(s).");
                 }
+            }
             };
 
             c.execute(tasks, tempUi, storage);

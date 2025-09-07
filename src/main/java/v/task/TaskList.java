@@ -132,4 +132,59 @@ public class TaskList {
                 .filter(t -> t.getDescription().toLowerCase().contains(k))
                 .toList();
     }
+
+    /**
+     * Gets all completed tasks using streams.
+     *
+     * @return A list of completed tasks.
+     */
+    public List<Task> getCompletedTasks() {
+        return tasks.stream()
+                .filter(Task::isDone)
+                .toList();
+    }
+
+    /**
+     * Gets all pending tasks using streams.
+     *
+     * @return A list of pending tasks.
+     */
+    public List<Task> getPendingTasks() {
+        return tasks.stream()
+                .filter(task -> !task.isDone())
+                .toList();
+    }
+
+    /**
+     * Counts completed tasks using streams.
+     *
+     * @return The number of completed tasks.
+     */
+    public long countCompletedTasks() {
+        return tasks.stream()
+                .filter(Task::isDone)
+                .count();
+    }
+
+    /**
+     * Counts pending tasks using streams.
+     *
+     * @return The number of pending tasks.
+     */
+    public long countPendingTasks() {
+        return tasks.stream()
+                .filter(task -> !task.isDone())
+                .count();
+    }
+
+    /**
+     * Gets task descriptions as a single string using streams.
+     *
+     * @return A string containing all task descriptions separated by newlines.
+     */
+    public String getAllDescriptions() {
+        return tasks.stream()
+                .map(Task::getDescription)
+                .reduce("", (acc, desc) -> acc + desc + "\n");
+    }
 }
