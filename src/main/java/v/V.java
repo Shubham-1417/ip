@@ -44,7 +44,8 @@ public class V {
             
             StringBuilder response = new StringBuilder();
             Ui tempUi = createResponseUi(response);
-            
+
+>>>>>>> master
             c.execute(tasks, tempUi, storage);
             storage.save(tasks);
 

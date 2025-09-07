@@ -22,6 +22,8 @@ public class TaskList {
      * @param tasks The initial list of tasks.
      */
     public TaskList(List<Task> tasks) {
+        // Assertion: tasks list should not be null
+        assert tasks != null : "Tasks list cannot be null";
         this.tasks = new ArrayList<>(tasks);
     }
 
@@ -31,6 +33,8 @@ public class TaskList {
      * @param task The task to add.
      */
     public void add(Task task) {
+        // Assertion: task should not be null
+        assert task != null : "Task cannot be null";
         tasks.add(task);
     }
 
@@ -42,8 +46,13 @@ public class TaskList {
      * @throws DukeException If the index is invalid.
      */
     public Task remove(int index) throws DukeException {
+        // Assertion: index should be non-negative
+        assert index >= 0 : "Index should be non-negative";
         try {
-            return tasks.remove(index);
+            Task removedTask = tasks.remove(index);
+            // Assertion: removed task should not be null
+            assert removedTask != null : "Removed task should not be null";
+            return removedTask;
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("That task doesn't exist. Use 'list' to see all tasks.");
         }
@@ -57,8 +66,12 @@ public class TaskList {
      * @throws DukeException If the index is invalid.
      */
     public Task markAsDone(int index) throws DukeException {
+        // Assertion: index should be non-negative
+        assert index >= 0 : "Index should be non-negative";
         try {
             Task task = tasks.get(index);
+            // Assertion: task should not be null
+            assert task != null : "Task should not be null";
             task.mark();
             return task;
         } catch (IndexOutOfBoundsException e) {
@@ -74,8 +87,12 @@ public class TaskList {
      * @throws DukeException If the index is invalid.
      */
     public Task unmarkAsDone(int index) throws DukeException {
+        // Assertion: index should be non-negative
+        assert index >= 0 : "Index should be non-negative";
         try {
             Task task = tasks.get(index);
+            // Assertion: task should not be null
+            assert task != null : "Task should not be null";
             task.unmark();
             return task;
         } catch (IndexOutOfBoundsException e) {
@@ -90,7 +107,12 @@ public class TaskList {
      * @return The task at the specified index.
      */
     public Task get(int index) {
-        return tasks.get(index);
+        // Assertion: index should be non-negative and within bounds
+        assert index >= 0 && index < tasks.size() : "Index should be within valid range";
+        Task task = tasks.get(index);
+        // Assertion: task should not be null
+        assert task != null : "Task should not be null";
+        return task;
     }
 
     /**
@@ -127,9 +149,69 @@ public class TaskList {
      * @return A new list containing matching tasks.
      */
     public List<Task> find(String keyword) {
+        // Assertion: keyword should not be null
+        assert keyword != null : "Keyword cannot be null";
         String k = keyword.toLowerCase();
-        return tasks.stream()
+        List<Task> results = tasks.stream()
                 .filter(t -> t.getDescription().toLowerCase().contains(k))
                 .toList();
+        // Assertion: results should not be null
+        assert results != null : "Search results should not be null";
+        return results;
+    }
+
+    /**
+     * Gets all completed tasks using streams.
+     *
+     * @return A list of completed tasks.
+     */
+    public List<Task> getCompletedTasks() {
+        return tasks.stream()
+                .filter(Task::isDone)
+                .toList();
+    }
+
+    /**
+     * Gets all pending tasks using streams.
+     *
+     * @return A list of pending tasks.
+     */
+    public List<Task> getPendingTasks() {
+        return tasks.stream()
+                .filter(task -> !task.isDone())
+                .toList();
+    }
+
+    /**
+     * Counts completed tasks using streams.
+     *
+     * @return The number of completed tasks.
+     */
+    public long countCompletedTasks() {
+        return tasks.stream()
+                .filter(Task::isDone)
+                .count();
+    }
+
+    /**
+     * Counts pending tasks using streams.
+     *
+     * @return The number of pending tasks.
+     */
+    public long countPendingTasks() {
+        return tasks.stream()
+                .filter(task -> !task.isDone())
+                .count();
+    }
+
+    /**
+     * Gets task descriptions as a single string using streams.
+     *
+     * @return A string containing all task descriptions separated by newlines.
+     */
+    public String getAllDescriptions() {
+        return tasks.stream()
+                .map(Task::getDescription)
+                .reduce("", (acc, desc) -> acc + desc + "\n");
     }
 }

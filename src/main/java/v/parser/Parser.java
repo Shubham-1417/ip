@@ -50,12 +50,18 @@ public class Parser {
      * @throws DukeException If the input is invalid.
      */
     public static Command parse(String input) throws DukeException {
+        // Assertion: input should not be null
+        assert input != null : "Input cannot be null";
+        
         if (input.trim().isEmpty()) {
             throw new DukeException(EMPTY_INPUT);
         }
         String[] parts = input.split(" ", SPLIT_LIMIT);
         String command = parts[0].toLowerCase();
         String arguments = parts.length > 1 ? parts[1].trim() : "";
+        
+        // Assertion: command should not be empty after processing
+        assert !command.isEmpty() : "Command should not be empty after processing";
 
         switch (command) {
         case COMMAND_LIST:
@@ -108,9 +114,14 @@ public class Parser {
     }
 
     private static AddTodoCommand parseTodoCommand(String arguments) throws DukeException {
+        // Assertion: arguments should not be null
+        assert arguments != null : "Arguments cannot be null";
+        
         if (arguments.isEmpty()) {
             throw new DukeException("Even ideas need words. The description of a todo cannot be empty.");
         }
+        // Assertion: arguments should not be empty after validation
+        assert !arguments.isEmpty() : "Arguments should not be empty after validation";
         return new AddTodoCommand(arguments);
     }
 
