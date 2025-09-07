@@ -41,11 +41,9 @@ public class V {
         try {
             Command c = Parser.parse(input);
             commandType = c.getClass().getSimpleName();
-            
+
             StringBuilder response = new StringBuilder();
             Ui tempUi = createResponseUi(response);
-
->>>>>>> master
             c.execute(tasks, tempUi, storage);
             storage.save(tasks);
 

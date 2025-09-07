@@ -37,7 +37,6 @@ public class Parser {
     private static final String ERROR_INVALID_TASK_NUMBER = "Please provide a valid task number.";
     private static final String ERROR_INVALID_DATE_FORMAT = "Please use the format: yyyy-MM-dd for dates.";
     private static final String EMPTY_INPUT = "Even silence speaks volumes. But I need words to understand you.";
-    
     // Constants for better code quality
     private static final int USER_INDEX_OFFSET = 1; // Convert 1-based user input to 0-based array index
     private static final int SPLIT_LIMIT = 2; // Split input into command and arguments
