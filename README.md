@@ -1,6 +1,28 @@
-# Duke project template
+# V - A V for Vendetta Themed Task Manager
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+V is a sophisticated task management application inspired by the iconic character from V for Vendetta. This JavaFX-powered application combines dramatic theatrical flair with practical task organization, featuring a modern glassmorphism UI and V's distinctive personality.
+
+## Features
+
+- **Dramatic V Personality**: All interactions are delivered with V's theatrical voice and revolutionary spirit
+- **Modern JavaFX GUI**: Beautiful glassmorphism interface with floating elements and smooth animations  
+- **V for Vendetta Theme**: Complete visual theming with background images, Guy Fawkes mask avatar, and thematic styling
+- **Task Management**: Full CRUD operations for todos, deadlines, and events
+- **Intelligent Search**: Case-insensitive task searching with V-themed responses
+- **Persistent Storage**: Automatic saving and loading of tasks
+- **Responsive Design**: Scalable interface that works across different screen sizes
+
+## Quick Start
+
+Run the application using the pre-built JAR file:
+```bash
+java -jar v-all.jar
+```
+
+Or build and run from source:
+```bash
+./gradlew run
+```
 
 ## Setting up in Intellij
 
