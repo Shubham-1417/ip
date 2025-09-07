@@ -118,6 +118,10 @@ public class V {
             return response.toString();
         } catch (DukeException e) {
             return e.getMessage();
+        } catch (Exception e) {
+            // Handle unexpected runtime exceptions gracefully
+            System.err.println("Unexpected error processing command: " + e.getMessage());
+            return "An unexpected error occurred. The shadows whisper of technical difficulties: " + e.getMessage();
         }
     }
 
