@@ -37,6 +37,9 @@ public class Parser {
     private static final String ERROR_INVALID_TASK_NUMBER = "Please provide a valid task number.";
     private static final String ERROR_INVALID_DATE_FORMAT = "Please use the format: yyyy-MM-dd for dates.";
     private static final String EMPTY_INPUT = "Even silence speaks volumes. But I need words to understand you.";
+    // Constants for better code quality
+    private static final int USER_INDEX_OFFSET = 1; // Convert 1-based user input to 0-based array index
+    private static final int SPLIT_LIMIT = 2; // Split input into command and arguments
 
     /**
      * Parses the user input and returns the corresponding command.
@@ -52,7 +55,7 @@ public class Parser {
         if (input.trim().isEmpty()) {
             throw new DukeException(EMPTY_INPUT);
         }
-        String[] parts = input.split(" ", 2);
+        String[] parts = input.split(" ", SPLIT_LIMIT);
         String command = parts[0].toLowerCase();
         String arguments = parts.length > 1 ? parts[1].trim() : "";
         
@@ -83,32 +86,30 @@ public class Parser {
         }
     }
 
-    private static MarkCommand parseMarkCommand(String arguments) throws DukeException {
-        // Assertion: arguments should not be null
-        assert arguments != null : "Arguments cannot be null";
-        
+    /**
+     * Parses a task index from arguments and converts from 1-based to 0-based indexing.
+     *
+     * @param arguments The arguments containing the task index.
+     * @return The 0-based task index.
+     * @throws DukeException If the arguments cannot be parsed as a valid task number.
+     */
+    private static int parseTaskIndex(String arguments) throws DukeException {
         try {
-            int index = Integer.parseInt(arguments) - 1;
-            // Assertion: index should be non-negative after conversion
-            assert index >= 0 : "Task index should be positive (1-based)";
-            return new MarkCommand(index);
+            int userIndex = Integer.parseInt(arguments);
+            return userIndex - USER_INDEX_OFFSET;
         } catch (NumberFormatException e) {
             throw new DukeException(ERROR_INVALID_TASK_NUMBER);
         }
     }
 
+    private static MarkCommand parseMarkCommand(String arguments) throws DukeException {
+        int index = parseTaskIndex(arguments);
+        return new MarkCommand(index);
+    }
+
     private static UnmarkCommand parseUnmarkCommand(String arguments) throws DukeException {
-        // Assertion: arguments should not be null
-        assert arguments != null : "Arguments cannot be null";
-        
-        try {
-            int index = Integer.parseInt(arguments) - 1;
-            // Assertion: index should be non-negative after conversion
-            assert index >= 0 : "Task index should be positive (1-based)";
-            return new UnmarkCommand(index);
-        } catch (NumberFormatException e) {
-            throw new DukeException(ERROR_INVALID_TASK_NUMBER);
-        }
+        int index = parseTaskIndex(arguments);
+        return new UnmarkCommand(index);
     }
 
     private static AddTodoCommand parseTodoCommand(String arguments) throws DukeException {
@@ -169,12 +170,8 @@ public class Parser {
     }
 
     private static DeleteCommand parseDeleteCommand(String arguments) throws DukeException {
-        try {
-            int index = Integer.parseInt(arguments) - 1;
-            return new DeleteCommand(index);
-        } catch (NumberFormatException e) {
-            throw new DukeException(ERROR_INVALID_TASK_NUMBER);
-        }
+        int index = parseTaskIndex(arguments);
+        return new DeleteCommand(index);
     }
 
     private static FindCommand parseFindCommand(String arguments) throws DukeException {
