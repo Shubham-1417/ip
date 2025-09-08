@@ -119,7 +119,82 @@ public class V {
                             .append(" matching revelation(s).");
                 }
             }
+
+            @Override
+            public void showSortedTasks(java.util.List<v.task.Task> sortedTasks, String criteria) {
+                if (sortedTasks.isEmpty()) {
+                    response.append("The stage is set, but the script is blank. "
+                            + "Your revolutionary agenda awaits its first act.");
+                    return;
+                }
+                // V-themed response based on sort criteria
+                String dramaticIntro = getDramaticSortIntro(criteria);
+                response.append(dramaticIntro).append("\n\n");
+                // Use streams to format sorted task list with indices
+                String taskList = java.util.stream.IntStream.range(0, sortedTasks.size())
+                        .mapToObj(i -> "  " + (i + 1) + "." + sortedTasks.get(i))
+                        .reduce("", (acc, task) -> acc + task + "\n");
+                response.append(taskList);
+                response.append("\nTotal acts of rebellion: ").append(sortedTasks.size()).append(" task(s).");
+            }
+            @Override
+            public void showHelp(String topic) {
+                if (topic.equals("sort")) {
+                    response.append("Voilà! The shadows reveal the art of organizing your revolutionary agenda:\n\n")
+                            .append("🎭 SORTING COMMANDS:\n")
+                            .append("• sort - Show tasks in original order\n")
+                            .append("• sort by date - Sort by date (deadlines/events chronologically)\n")
+                            .append("• sort by type - Group by type (todo, deadline, event)\n")
+                            .append("• sort by status - Pending tasks first, then completed\n")
+                            .append("• sort by name - Sort alphabetically by description\n\n")
+                            .append("The shadows whisper: Each sort reveals your agenda in a new light!");
+                } else {
+                    response.append("Voilà! The shadows reveal the secrets of this revolutionary tool:\n\n")
+                            .append("📋 TASK MANAGEMENT:\n")
+                            .append("• todo <description> - Add a new task\n")
+                            .append("• deadline <description> /by <date> - Add a deadline\n")
+                            .append("• event <description> /from <start> /to <end> - Add an event\n")
+                            .append("• list - Show all tasks\n")
+                            .append("• mark <number> - Mark task as done\n")
+                            .append("• unmark <number> - Mark task as not done\n")
+                            .append("• delete <number> - Remove a task\n\n")
+                            .append("🔍 SEARCH & ORGANIZE:\n")
+                            .append("• find <keyword> - Search for tasks\n")
+                            .append("• sort [by <criteria>] - Sort tasks (see 'help sort')\n\n")
+                            .append("ℹ️  HELP:\n")
+                            .append("• help - Show this help\n")
+                            .append("• help sort - Show sorting options\n")
+                            .append("• bye - Exit the application\n\n")
+                            .append("The shadows whisper: Use 'help sort' for sorting secrets!");
+                }
+            }
         };
+    }
+
+    /**
+     * Gets a dramatic V-themed introduction based on sort criteria.
+     *
+     * @param criteria The sort criteria.
+     * @return A dramatic introduction message.
+     */
+    private String getDramaticSortIntro(String criteria) {
+        switch (criteria.toLowerCase()) {
+        case "date":
+            return "Voilà! Your revolutionary agenda, now perfectly orchestrated by time! "
+                    + "The shadows reveal your conspiracies in chronological order.";
+        case "type":
+            return "Behold! Your tasks, now organized by their nature! "
+                    + "The shadows have grouped your conspiracies by type.";
+        case "status":
+            return "The shadows reveal the status of your revolutionary agenda! "
+                    + "Pending missions first, then completed victories.";
+        case "name":
+            return "Voilà! Your conspiracies, now arranged alphabetically! "
+                    + "The shadows have organized your agenda in perfect order.";
+        default:
+            return "Behold! Your current conspiracies against the mundane! "
+                    + "The shadows reveal your revolutionary agenda.";
+        }
     }
 
     /**

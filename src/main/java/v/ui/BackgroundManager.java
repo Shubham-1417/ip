@@ -32,7 +32,6 @@ public class BackgroundManager {
 
         // Set dark background immediately to prevent white flashes
         rootPane.setStyle("-fx-background-color: #0a0a0a;");
-        
         // Create background ImageView as the first child
         backgroundView = new ImageView();
         backgroundView.setPreserveRatio(false); // Fill entire area, don't preserve ratio
@@ -40,13 +39,13 @@ public class BackgroundManager {
         backgroundView.setCache(true);
         backgroundView.fitWidthProperty().bind(rootPane.widthProperty());
         backgroundView.fitHeightProperty().bind(rootPane.heightProperty());
-        
+
         // Ensure ImageView is positioned correctly
         AnchorPane.setTopAnchor(backgroundView, 0.0);
         AnchorPane.setBottomAnchor(backgroundView, 0.0);
         AnchorPane.setLeftAnchor(backgroundView, 0.0);
         AnchorPane.setRightAnchor(backgroundView, 0.0);
-        
+
         rootPane.getChildren().add(0, backgroundView);
 
         initializeBackgroundImages();
@@ -84,14 +83,13 @@ public class BackgroundManager {
             }
 
             // Load image with proper sizing for fullscreen
-            Image backgroundImage = new Image(url.toExternalForm(), 
-                rootPane.getWidth() > 0 ? rootPane.getWidth() : 800, 
-                rootPane.getHeight() > 0 ? rootPane.getHeight() : 600, 
+            Image backgroundImage = new Image(url.toExternalForm(),
+                rootPane.getWidth() > 0 ? rootPane.getWidth() : 800,
+                rootPane.getHeight() > 0 ? rootPane.getHeight() : 600,
                 false, true, true); // Don't preserve ratio, use background loading
-            
+
             // Set ImageView - this will stretch to fill the entire pane
             backgroundView.setImage(backgroundImage);
-            
             // Keep dark background as fallback in case ImageView fails
             rootPane.setStyle("-fx-background-color: #0a0a0a;");
             System.out.println("Background set to: " + imagePath);

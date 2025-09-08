@@ -12,6 +12,7 @@ import v.command.ExitCommand;
 import v.command.FindCommand;
 import v.command.ListCommand;
 import v.command.MarkCommand;
+import v.command.SortCommand;
 import v.command.UnmarkCommand;
 import v.task.DukeException;
 
@@ -29,10 +30,11 @@ public class Parser {
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_FIND = "find";
+    private static final String COMMAND_SORT = "sort";
 
     // Error messages
     private static final String ERROR_INVALID_COMMAND = "A curious utterance. I do not recognize it. "
-            + "Try: todo, deadline, event, list, mark, unmark, bye";
+            + "Try: todo, deadline, event, list, mark, unmark, sort, bye";
     private static final String ERROR_EMPTY_DESCRIPTION = "The description cannot be empty.";
     private static final String ERROR_INVALID_TASK_NUMBER = "Please provide a valid task number.";
     private static final String ERROR_INVALID_DATE_FORMAT = "Please use the format: yyyy-MM-dd for dates.";
@@ -51,14 +53,12 @@ public class Parser {
     public static Command parse(String input) throws DukeException {
         // Assertion: input should not be null
         assert input != null : "Input cannot be null";
-        
         if (input.trim().isEmpty()) {
             throw new DukeException(EMPTY_INPUT);
         }
         String[] parts = input.split(" ", SPLIT_LIMIT);
         String command = parts[0].toLowerCase();
         String arguments = parts.length > 1 ? parts[1].trim() : "";
-        
         // Assertion: command should not be empty after processing
         assert !command.isEmpty() : "Command should not be empty after processing";
 
@@ -81,6 +81,8 @@ public class Parser {
             return parseDeleteCommand(arguments);
         case COMMAND_FIND:
             return parseFindCommand(arguments);
+        case COMMAND_SORT:
+            return parseSortCommand(arguments);
         default:
             throw new DukeException(ERROR_INVALID_COMMAND);
         }
@@ -113,9 +115,7 @@ public class Parser {
     }
 
     private static AddTodoCommand parseTodoCommand(String arguments) throws DukeException {
-        // Assertion: arguments should not be null
-        assert arguments != null : "Arguments cannot be null";
-        
+        // Assertion: arguments should not be nullassert arguments != null : "Arguments cannot be null";
         if (arguments.isEmpty()) {
             throw new DukeException("Even ideas need words. The description of a todo cannot be empty.");
         }
@@ -181,4 +181,26 @@ public class Parser {
         }
         return new FindCommand(rest);
     }
+
+    /**
+     * Parses a sort command with optional criteria.
+     *
+     * @param arguments The sort criteria (date, type, status, name, or empty for default).
+     * @return A SortCommand with the specified criteria.
+     */
+    private static SortCommand parseSortCommand(String arguments) {
+        // Assertion: arguments should not be null
+        assert arguments != null : "Arguments cannot be null";
+
+        String criteria = arguments.trim();
+        if (criteria.isEmpty()) {
+            criteria = "default";
+        } else if (criteria.startsWith("by ")) {
+            // Handle "sort by date" format
+            criteria = criteria.substring(3).trim();
+        }
+
+        return new SortCommand(criteria);
+    }
+
 }

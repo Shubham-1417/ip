@@ -36,7 +36,6 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
-        
         // Add dramatic entrance animation
         AnimationManager.createDramaticEntrance(this).play();
     }
