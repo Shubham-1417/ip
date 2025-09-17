@@ -130,21 +130,18 @@ public class SortCommand extends Command {
                 String month = parts[0];
                 String day = parts[1];
                 String year = parts[2];
-                
                 // Convert month name to number
                 String monthNum = switch (month) {
-                    case "Jan" -> "01"; case "Feb" -> "02"; case "Mar" -> "03";
-                    case "Apr" -> "04"; case "May" -> "05"; case "Jun" -> "06";
-                    case "Jul" -> "07"; case "Aug" -> "08"; case "Sep" -> "09";
-                    case "Oct" -> "10"; case "Nov" -> "11"; case "Dec" -> "12";
-                    default -> "01";
+                case "Jan" -> "01"; case "Feb" -> "02"; case "Mar" -> "03";
+                case "Apr" -> "04"; case "May" -> "05"; case "Jun" -> "06";
+                case "Jul" -> "07"; case "Aug" -> "08"; case "Sep" -> "09";
+                case "Oct" -> "10"; case "Nov" -> "11"; case "Dec" -> "12";
+                default -> "01";
                 };
-                
                 // Pad day with leading zero if needed
                 if (day.length() == 1) {
                     day = "0" + day;
                 }
-                
                 return year + "-" + monthNum + "-" + day;
             } else {
                 // Fallback for other formats
@@ -197,7 +194,6 @@ public class SortCommand extends Command {
                 .sorted(Comparator.comparing(task -> {
                     // Extract description part for proper alphabetical sorting
                     String taskString = task.toString();
-                    
                     // Remove task type prefix [T], [D], [E] and status [X], [ ]
                     if (taskString.startsWith("[T]")) {
                         return taskString.substring(4).toLowerCase();
