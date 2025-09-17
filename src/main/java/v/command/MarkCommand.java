@@ -38,7 +38,6 @@ public class MarkCommand extends Command {
         assert tasks != null : "TaskList cannot be null";
         assert ui != null : "Ui cannot be null";
         assert storage != null : "Storage cannot be null";
-        
         try {
             Task task = tasks.markAsDone(index);
             // Assertion: task should not be null after marking

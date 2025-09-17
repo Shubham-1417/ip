@@ -149,7 +149,6 @@ public class Ui {
             return;
         }
         System.out.println("     Your current conspiracies (tasks):");
-        
         // Use streams to format task list with indices
         java.util.stream.IntStream.range(0, tasks.size())
                 .mapToObj(i -> "     " + (i + 1) + "." + tasks.get(i))
@@ -167,7 +166,6 @@ public class Ui {
             System.out.println("     No matches. Even the shadows are silent.");
         } else {
             System.out.println("     Here are the matching tasks in your list:");
-            
             // Use streams to format search results with indices
             java.util.stream.IntStream.range(0, matches.size())
                     .mapToObj(i -> "     " + (i + 1) + "." + matches.get(i))
@@ -203,5 +201,136 @@ public class Ui {
      */
     public void showLoadingError() {
         showError("Error loading tasks. Starting with an empty task list.");
+    }
+
+    /**
+     * Shows sorted tasks with V's dramatic flair.
+     *
+     * @param sortedTasks The sorted list of tasks to display.
+     * @param criteria The sort criteria used.
+     */
+    public void showSortedTasks(List<Task> sortedTasks, String criteria) {
+        if (sortedTasks.isEmpty()) {
+            System.out.println("     The stage is set, but the script is blank. "
+                    + "Your revolutionary agenda awaits its first act.");
+            return;
+        }
+
+        // V-themed response based on sort criteria
+        String dramaticIntro = getDramaticSortIntro(criteria);
+        System.out.println("     " + dramaticIntro);
+        System.out.println();
+
+        // Use streams to format sorted task list with indices
+        java.util.stream.IntStream.range(0, sortedTasks.size())
+                .mapToObj(i -> "     " + (i + 1) + "." + sortedTasks.get(i))
+                .forEach(System.out::println);
+
+        System.out.println();
+        System.out.println("     Total acts of rebellion: " + sortedTasks.size() + " task(s).");
+    }
+
+    /**
+     * Gets a dramatic V-themed introduction based on sort criteria.
+     *
+     * @param criteria The sort criteria.
+     * @return A dramatic introduction message.
+     */
+    private String getDramaticSortIntro(String criteria) {
+        switch (criteria.toLowerCase()) {
+        case "date":
+            return "Voilà! Your revolutionary agenda, now perfectly orchestrated by time! "
+                    + "The shadows reveal your conspiracies in chronological order.";
+        case "type":
+            return "Behold! Your tasks, now organized by their nature! "
+                    + "The shadows have grouped your conspiracies by type.";
+        case "status":
+            return "The shadows reveal the status of your revolutionary agenda! "
+                    + "Pending missions first, then completed victories.";
+        case "name":
+            return "Voilà! Your conspiracies, now arranged alphabetically! "
+                    + "The shadows have organized your agenda in perfect order.";
+        default:
+            return "Behold! Your current conspiracies against the mundane! "
+                    + "The shadows reveal your revolutionary agenda.";
+        }
+    }
+
+    /**
+     * Shows help information with V's dramatic flair.
+     *
+     * @param topic The help topic to display.
+     */
+    public void showHelp(String topic) {
+        switch (topic.toLowerCase()) {
+        case "sort":
+            showSortHelp();
+            break;
+        case "general":
+        default:
+            showGeneralHelp();
+            break;
+        }
+    }
+
+    /**
+     * Shows general help information.
+     */
+    private void showGeneralHelp() {
+        System.out.println("     Voilà! The shadows reveal the secrets of this revolutionary tool:");
+        System.out.println();
+        System.out.println("     📋 TASK MANAGEMENT:");
+        System.out.println("     • todo <description> - Add a new task");
+        System.out.println("     • deadline <description> /by <date> - Add a deadline");
+        System.out.println("     • event <description> /from <start> /to <end> - Add an event");
+        System.out.println("     • list - Show all tasks");
+        System.out.println("     • mark <number> - Mark task as done");
+        System.out.println("     • unmark <number> - Mark task as not done");
+        System.out.println("     • delete <number> - Remove a task");
+        System.out.println();
+        System.out.println("     🔍 SEARCH & ORGANIZE:");
+        System.out.println("     • find <keyword> - Search for tasks");
+        System.out.println("     • sort [by <criteria>] - Sort tasks (see 'help sort')");
+        System.out.println();
+        System.out.println("     ℹ️  HELP:");
+        System.out.println("     • help - Show this help");
+        System.out.println("     • help sort - Show sorting options");
+        System.out.println("     • bye - Exit the application");
+        System.out.println();
+        System.out.println("     The shadows whisper: Use 'help sort' for sorting secrets!");
+    }
+
+    /**
+     * Shows sorting help information.
+     */
+    private void showSortHelp() {
+        System.out.println("     Voilà! The shadows reveal the art of organizing your revolutionary agenda:");
+        System.out.println();
+        System.out.println("     🎭 SORTING COMMANDS:");
+        System.out.println("     • sort - Show tasks in original order");
+        System.out.println("     • sort by date - Sort by date (deadlines/events chronologically)");
+        System.out.println("     • sort by type - Group by type (todo, deadline, event)");
+        System.out.println("     • sort by status - Pending tasks first, then completed");
+        System.out.println("     • sort by name - Sort alphabetically by description");
+        System.out.println();
+        System.out.println("     📅 DATE SORTING:");
+        System.out.println("     - Deadlines and events are sorted by their dates");
+        System.out.println("     - Todos appear at the end (no specific date)");
+        System.out.println("     - Chronological order: earliest dates first");
+        System.out.println();
+        System.out.println("     🏷️  TYPE SORTING:");
+        System.out.println("     - Todos appear first");
+        System.out.println("     - Deadlines appear second");
+        System.out.println("     - Events appear third");
+        System.out.println();
+        System.out.println("     ✅ STATUS SORTING:");
+        System.out.println("     - Pending (incomplete) tasks appear first");
+        System.out.println("     - Completed tasks appear second");
+        System.out.println();
+        System.out.println("     🔤 NAME SORTING:");
+        System.out.println("     - Tasks are sorted alphabetically by description");
+        System.out.println("     - Case-insensitive sorting");
+        System.out.println();
+        System.out.println("     The shadows whisper: Each sort reveals your agenda in a new light!");
     }
 }

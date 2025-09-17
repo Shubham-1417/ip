@@ -26,7 +26,6 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            
             // Set V's Guy Fawkes mask as application icon
             try {
                 stage.getIcons().add(new javafx.scene.image.Image(
