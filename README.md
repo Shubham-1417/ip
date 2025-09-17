@@ -64,3 +64,11 @@ To build the runnable JAR yourself:
 .\\gradlew clean shadowJar      # on Windows
 ```
 The JAR will be at `build\\libs\\v-all.jar`.
+
+## Acknowledgements
+
+### AI Assistance
+This project was developed with  AI assistance using gpt for:
+- JavaFX GUI development and modern UI styling
+- Code quality improvements and refactoring
+- V personality development and thematic responses
