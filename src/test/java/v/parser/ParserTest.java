@@ -34,7 +34,7 @@ public class ParserTest {
 
     @Test
     public void parse_event_returnsAddEventCommand() throws DukeException {
-        assertTrue(Parser.parse("event project meeting /from Mon 2pm /to 4pm") instanceof AddEventCommand);
+        assertTrue(Parser.parse("event project meeting /from 2025-01-01 /to 2025-02-02") instanceof AddEventCommand);
     }
 
     @Test

@@ -1,5 +1,7 @@
 package v.command;
 
+import java.time.LocalDate;
+
 import v.storage.Storage;
 import v.task.DukeException;
 import v.task.Event;
@@ -12,17 +14,17 @@ import v.ui.Ui;
  */
 public class AddEventCommand extends Command {
     private final String description;
-    private final String from;
-    private final String to;
+    private final LocalDate from;
+    private final LocalDate to;
 
     /**
      * Creates a new AddEventCommand.
      *
      * @param description The description of the event.
-     * @param from The start time of the event.
-     * @param to The end time of the event.
+     * @param from The start date of the event.
+     * @param to The end date of the event.
      */
-    public AddEventCommand(String description, String from, String to) {
+    public AddEventCommand(String description, LocalDate from, LocalDate to) {
         this.description = description;
         this.from = from;
         this.to = to;

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import v.task.Deadline;
@@ -87,7 +88,14 @@ public class Storage {
                     if (parts.length < 5) {
                         continue;
                     }
-                    task = new Event(description, parts[3].trim(), parts[4].trim());
+                    try {
+                        LocalDate fromDate = LocalDate.parse(parts[3].trim());
+                        LocalDate toDate = LocalDate.parse(parts[4].trim());
+                        task = new Event(description, fromDate, toDate);
+                    } catch (DateTimeParseException e) {
+                        // Skip invalid date format
+                        continue;
+                    }
                     break;
                 default:
                     continue;

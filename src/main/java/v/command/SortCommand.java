@@ -93,18 +93,18 @@ public class SortCommand extends Command {
         return tasks.stream()
                 .sorted(Comparator
                         .comparing((Task task) -> {
-                            // Extract date for comparison
+                            // Extract date for comparison using toString parsing
                             String taskString = task.toString();
                             if (taskString.contains("(by:")) {
-                                // Deadline task
+                                // Deadline task - extract date from display format
                                 String datePart = taskString.substring(taskString.indexOf("(by:") + 4);
                                 datePart = datePart.substring(0, datePart.indexOf(")"));
-                                return parseDateForSorting(datePart);
+                                return parseDateForSorting(datePart.trim());
                             } else if (taskString.contains("(from:")) {
-                                // Event task
+                                // Event task - extract date from display format
                                 String datePart = taskString.substring(taskString.indexOf("(from:") + 6);
                                 datePart = datePart.substring(0, datePart.indexOf(" to:"));
-                                return parseDateForSorting(datePart);
+                                return parseDateForSorting(datePart.trim());
                             } else {
                                 // Todo task - put at end
                                 return "9999-12-31";
@@ -114,12 +114,15 @@ public class SortCommand extends Command {
                 .toList();
     }
 
+
     /**
      * Parses date string for sorting comparison.
      * Converts dates to YYYY-MM-DD format for proper chronological sorting.
      */
     private String parseDateForSorting(String dateStr) {
         try {
+            // Trim the input string
+            dateStr = dateStr.trim();
             // Handle different date formats
             if (dateStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
                 // Already in YYYY-MM-DD format
@@ -194,13 +197,22 @@ public class SortCommand extends Command {
                 .sorted(Comparator.comparing(task -> {
                     // Extract description part for proper alphabetical sorting
                     String taskString = task.toString();
-                    // Remove task type prefix [T], [D], [E] and status [X], [ ]
+                    // Find the description part after the status indicator
                     if (taskString.startsWith("[T]")) {
-                        return taskString.substring(4).toLowerCase();
+                        // Format: [T][X] description or [T][ ] description
+                        // Find the first space after the status indicator
+                        int startIndex = taskString.indexOf("] ", 3) + 2;
+                        return taskString.substring(startIndex).toLowerCase();
                     } else if (taskString.startsWith("[D]")) {
-                        return taskString.substring(4).toLowerCase();
+                        // Format: [D][D][X] description (by: date) or [D][D][ ] description (by: date)
+                        // Find the first space after the status indicator
+                        int startIndex = taskString.indexOf("] ", 6) + 2;
+                        return taskString.substring(startIndex).toLowerCase();
                     } else if (taskString.startsWith("[E]")) {
-                        return taskString.substring(4).toLowerCase();
+                        // Format: [E][E][X] description (from: date to: date) or [E][E][ ] description
+                        // Find the first space after the status indicator
+                        int startIndex = taskString.indexOf("] ", 6) + 2;
+                        return taskString.substring(startIndex).toLowerCase();
                     } else {
                         return taskString.toLowerCase();
                     }

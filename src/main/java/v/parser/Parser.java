@@ -130,9 +130,15 @@ public class Parser {
     }
 
     private static AddDeadlineCommand parseDeadlineCommand(String arguments) throws DukeException {
+        // Check if arguments start with /by (missing description)
+        if (arguments.trim().startsWith("/by")) {
+            throw new DukeException("Time waits for no one, but words are required. "
+                    + "The description of a deadline cannot be empty.");
+        }
+
         String[] parts = arguments.split("\\s+/by\\s+", 2);
         if (parts.length < 2) {
-            throw new DukeException("A deadline requires a /by. Example: deadline return book /by Sunday");
+            throw new DukeException("A deadline requires a /by. Example: deadline return book /by 2025-02-02");
         }
 
         String description = parts[0].trim();
@@ -152,9 +158,15 @@ public class Parser {
     }
 
     private static AddEventCommand parseEventCommand(String arguments) throws DukeException {
+        // Check if arguments start with /from (missing description)
+        if (arguments.trim().startsWith("/from")) {
+            throw new DukeException("Every revolution needs a purpose. The description of an event cannot be empty.");
+        }
+
         String[] parts = arguments.split("\\s+/from\\s+", 2);
         if (parts.length < 2) {
-            throw new DukeException("An event requires /from and /to. Example: event meet /from Mon 2pm /to 4pm");
+            throw new DukeException("An event requires /from and /to. "
+                    + "Example: event meet /from 2025-01-01 /to 2025-02-02");
         }
 
         String description = parts[0].trim();
@@ -171,7 +183,14 @@ public class Parser {
             throw new DukeException("Every revolution needs a purpose. The description of an event cannot be empty.");
         }
 
-        return new AddEventCommand(description, from, to);
+        // Parse dates like deadline does
+        try {
+            LocalDate fromDate = LocalDate.parse(from);
+            LocalDate toDate = LocalDate.parse(to);
+            return new AddEventCommand(description, fromDate, toDate);
+        } catch (DateTimeParseException e) {
+            throw new DukeException(ERROR_INVALID_DATE_FORMAT);
+        }
     }
 
     private static DeleteCommand parseDeleteCommand(String arguments) throws DukeException {
